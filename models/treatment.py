@@ -8,7 +8,12 @@ class Treatment(db.Model):
     prescription = db.Column(db.Text, nullable=True)
     notes = db.Column(db.Text, nullable=True)
 
-    appointment = db.relationship('Appointment', backref=db.backref('treatment', lazy=True, uselist=False))
+    appointment = db.relationship('Appointment', 
+                                backref=db.backref('treatment', 
+                                                 lazy=True, 
+                                                 uselist=False,
+                                                 cascade='all, delete'),
+                                lazy=True)
 
     def __repr__(self):
         return f"<Treatment for appointment {self.appointment_id}>"
