@@ -14,7 +14,7 @@ class DocSchedule(db.Model):
 
     doctor = db.relationship(
         'Doctor',
-        backref=db.backref('schedules', cascade="all, delete-orphan", passive_deletes=True),
+        back_populates='schedules',
         lazy=True
     )
 

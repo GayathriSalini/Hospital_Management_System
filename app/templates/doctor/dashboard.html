@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+{% block body_class %} landing-page {% endblock %}
+{% block title %} Doctor-Dashboard | NHS Hospital {% endblock %}
+
+{% block navbar %}
+<div class="container nav_bar">
+  <div class="d-flex justify-content-between align-items-center mt-2">
+      <div><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong>  &nbsp;   Health Management System</a> </div>
+      <div ><a  href="{{ url_for('patient.dashboard') }}">DOCTOR</a></div>
+  </div>  
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="main_container mt-1 mx-2 bg-white" style="width=90%; height:88vh">
+    <div class="row">
+        <h2 class="text-center">Doctor Dashboard</h2>
+    </div>
+</div>
+{% endblock %}

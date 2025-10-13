@@ -14,10 +14,8 @@ class Patient(db.Model):
     
     appointments = db.relationship(
         'Appointment',
-        backref='patient',
-        lazy=True,
-        cascade='all, delete-orphan',
-        passive_deletes=True
+        back_populates='patient',
+        cascade='all, delete-orphan'
     )
 
     def __repr__(self):

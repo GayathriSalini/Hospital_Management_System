@@ -11,32 +11,19 @@ class Appointment(db.Model):
     appo_time = db.Column(db.Time, nullable=False)
     status = db.Column(db.String(20), nullable=False, default='Booked')
 
-
-    patient = db.relationship(
-        'Patient',
-        backref=db.backref('appointments', cascade="all, delete-orphan", passive_deletes=True),
-        lazy=True
-    )
-    doctor = db.relationship(
-        'Doctor',
-        backref=db.backref('appointments', cascade="all, delete-orphan", passive_deletes=True),
-        lazy=True
-    )
-
+    patient = db.relationship('Patient', back_populates='appointments')
+    
+    doctor = db.relationship('Doctor', back_populates='appointments')
     
     treatment = db.relationship(
         'Treatment',
-        backref='appointment',
-        lazy=True,
-        cascade='all, delete-orphan',
+        back_populates='appointment',
         uselist=False,
-        passive_deletes=True
+        cascade='all, delete-orphan'
     )
 
     def __repr__(self):
         return f"<Appointment {self.appo_id} Doctor:{self.doc_id} Patient:{self.p_id} Date:{self.appo_date} Status:{self.status}>"
-
-
 
     
     

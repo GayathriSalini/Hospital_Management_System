@@ -1,0 +1,136 @@
+{% extends 'layout.html' %}
+{% block body_class %}landing-page{% endblock %}
+{% block title %}Login | NHS Hospital{% endblock %}
+
+{% block navbar %}
+<div class="container nav_bar">
+  <div class="d-flex justify-content-between align-items-center mt-4">
+    <div>
+      <a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong> &nbsp; Health Management System</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+{% set active_tab = request.args.get('active_tab') or 'patient' %}
+<div class="main_container d-flex flex-column align-items-center justify-content-center" style="min-height: 80vh;">
+  <div style="max-width: 650px; width: 100%;">
+    <div class="d-flex flex-row justify-content-end mb-2">
+      <ul class="nav nav-tabs custom-tab-bg" id="loginTab" role="tablist" style="width:auto;">
+        <li class="nav-item">
+          <button class="nav-link {% if active_tab == 'patient' %}active{% endif %}" id="patient-tab" data-bs-toggle="tab" data-bs-target="#patient" type="button" role="tab" aria-controls="patient" aria-selected="{{ 'true' if active_tab == 'patient' else 'false' }}">
+            Patient
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link {% if active_tab == 'doctor' %}active{% endif %}" id="doctor-tab" data-bs-toggle="tab" data-bs-target="#doctor" type="button" role="tab" aria-controls="doctor" aria-selected="{{ 'true' if active_tab == 'doctor' else 'false' }}">
+            Doctor
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link {% if active_tab == 'admin' %}active{% endif %}" id="admin-tab" data-bs-toggle="tab" data-bs-target="#admin" type="button" role="tab" aria-controls="admin" aria-selected="{{ 'true' if active_tab == 'admin' else 'false' }}">
+            Admin
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="tab-content mt-2" id="loginTabContent">
+      <div class="tab-pane fade {% if active_tab == 'patient' %}show active{% endif %}" id="patient" role="tabpanel" aria-labelledby="patient-tab" tabindex="0">
+        <form method="POST" action="{{ url_for('auth.login') }}" class="p-4 bg-light rounded shadow" style="width: 100%;">
+          {% if active_tab == 'patient' %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                <div style="max-width: 600px; width: 100%; margin-bottom: 1rem;">
+                  {% for category, message in messages %}
+                    <div class="text-center alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                      {{ message }}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endwith %}
+          {% endif %}
+          <div class="mb-3">
+            <label for="p_email" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="p_email" name="p_email" required />
+          </div>
+          <div class="mb-3">
+            <label for="p_password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="p_password" name="p_password" required />
+          </div>
+          <input type="hidden" name="role" value="patient" />
+          <button type="submit" class="btn btn-primary w-100">Login as Patient</button>
+        </form>
+      </div>
+
+      <div class="tab-pane fade {% if active_tab == 'doctor' %}show active{% endif %}" id="doctor" role="tabpanel" aria-labelledby="doctor-tab" tabindex="0">
+        <form method="POST" action="{{ url_for('auth.login') }}" class="p-4 bg-light rounded shadow" style="width: 100%;">
+          {% if active_tab == 'doctor' %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                <div style="max-width: 600px; width: 100%; margin-bottom: 1rem;">
+                  {% for category, message in messages %}
+                    <div class="text-center alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                      {{ message }}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endwith %}
+          {% endif %}
+          <div class="mb-3">
+            <label for="d_email" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="d_email" name="d_email" required />
+          </div>
+          <div class="mb-3">
+            <label for="d_password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="d_password" name="d_password" required />
+          </div>
+          <input type="hidden" name="role" value="doctor" />
+          <button type="submit" class="btn btn-primary w-100">Login as Doctor</button>
+        </form>
+      </div>
+
+      <div class="tab-pane fade {% if active_tab == 'admin' %}show active{% endif %}" id="admin" role="tabpanel" aria-labelledby="admin-tab" tabindex="0">
+        <form method="POST" action="{{ url_for('auth.login') }}" class="p-4 bg-light rounded shadow" style="width: 100%;">
+          {% if active_tab == 'admin' %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                <div style="max-width: 600px; width: 100%; margin-bottom: 1rem;">
+                  {% for category, message in messages %}
+                    <div class="text-center alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                      {{ message }}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endwith %}
+          {% endif %}
+          <div class="mb-3">
+            <label for="a_email" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="a_email" name="a_email" required />
+          </div>
+          <div class="mb-3">
+            <label for="a_password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="a_password" name="a_password" required />
+          </div>
+          <input type="hidden" name="role" value="admin" />
+          <button type="submit" class="btn btn-primary w-100">Login as Admin</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+<footer class="py-3 text-center mt-auto">
+  <small class="text-muted my-3 landing_footer">&copy; 2025 | NHS Hospital Management System</small>
+</footer>
+{% endblock %}

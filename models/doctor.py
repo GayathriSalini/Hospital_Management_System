@@ -1,3 +1,4 @@
+from werkzeug.security import generate_password_hash
 from models import db
 
 class Doctor(db.Model):
@@ -13,19 +14,17 @@ class Doctor(db.Model):
  
     appointments = db.relationship(
         'Appointment',
-        backref='doctor',
-        lazy=True,
-        cascade='all, delete-orphan',
-        passive_deletes=True
+        back_populates='doctor',
+        cascade='all, delete-orphan'
     )
 
     schedules = db.relationship(
         'DocSchedule',
-        backref='doctor',
-        lazy=True,
+        back_populates='doctor',
         cascade='all, delete-orphan',
         passive_deletes=True
     )
+    
 
     def __repr__(self):
         return f"<Doctor {self.doc_name} ({self.doc_email})>"

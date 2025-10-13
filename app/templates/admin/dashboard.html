@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+{% block body_class %} landing-page {% endblock %}
+{% block title %} Admin-Dashboard | NHS Hospital {% endblock %}
+
+
+{% block content %}
+<div class="main_container dashboard mt-3 mx-2 bg-white" style="width=90%; height:88vh">
+<div class="sidebar">
+    <div class="logo" ><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong>  &nbsp;   Health Management System</a> </div>
+    <ul class="menu">
+      <li><a href="#">Dashboard</a></li>
+      <li><a href="{{ url_for('admin.add_doctor') }}">Add Doctor</a></li>
+      <li><a href="{{ url_for('admin.add_patient') }}">Add Patient</a></li>
+      <li><a href="#">Doctors</a></li>
+      <li><a href="#">Patients</a></li>
+      <li><a href="#">Appointments</a></li>
+      <li><a href="#">Search</a></li>
+      <li><a href="#">Settings</a></li>
+    </ul>
+    
+  </div>
+  <div class="main">
+    <div class="header">
+      <h2>Welcome, Admin!</h2>
+      <div class="admin-info">
+        <img src="{{ url_for('static', filename='images/admin_photo.png')}}" alt="Profile">
+        <span>admin@nhshospital.com</span>
+      </div>
+    </div>
+    <div class="stats-cards">
+      <div class="card">
+        <h2>{{ total_doctors }}</h2>
+        <p>Doctors</p>
+      </div>
+      <div class="card">
+        <h2>{{ total_patients }}</h2>
+        <p>Patients</p>
+      </div>
+      <div class="card">
+        <h2>{{ total_appointments }}</h2>
+        <p>Appointments</p>
+      </div>
+    </div>
+    <div class="task_btns">
+      <button class="task_btn">Add Doctor</button>
+      <button class="task_btn">Add Patient</button>
+      <button class="task_btn">View Appointments</button>
+      <button class="task_btn">Search</button>
+    </div>
+    <div class="panel">
+      <h3>Quick Notification</h3>
+      <p>Emily just sent you a task for tomorrow’s appointment schedules.</p>
+      <button class="task_btn">View Now</button>
+    </div>
+    <div class="panel">
+      <h3>Today’s Tasks</h3>
+      <ul>
+        <li>Approve new doctor registrations</li>
+        <li>Review appointment cancellations</li>
+        <li>Update patient profiles</li>
+      </ul>
+    </div>
+  </div>
+  
+</div>
+{% endblock %}

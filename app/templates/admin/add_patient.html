@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+
+{% block body_class %}landing-page{% endblock %}
+
+{% block title %} Register | NHS Hospital {% endblock %}
+
+{% block navbar %}
+<div class="container nav_bar">
+  <div class="d-flex justify-content-between align-items-center mt-4">
+      <div>
+        <a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong> &nbsp; Health Management System</a>
+     </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="main_container register_form d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  
+  <form action="{{ url_for('admin.add_patient') }}" method="POST" class="p-4 bg-light rounded shadow" style="max-width: 600px; width: 100%;">
+    <h2 class="text-center">“Your Heath Journey Begins Here”</h2>
+   
+    <!-- Flash Message -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div style="max-width: 600px; width: 100%; margin-bottom: 1rem;">
+      {% for category, message in messages %}
+        <div class=" text-center alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+    <div class="row mt-3 mb-3">
+      <div class="col-md-6">
+        <label for="p_name" class="form-label fw-semibold">Full Name:</label>
+        <input type="text" class="form-control" id="p_name" name="p_name" required maxlength="225" placeholder="Enter your full name">
+      </div>
+      <div class="col-md-6">
+        <label for="p_email" class="form-label fw-semibold">Email:</label>
+        <input type="email" class="form-control" id="p_email" name="p_email" required maxlength="225" placeholder="Enter your email">
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="p_password" class="form-label fw-semibold">Password:</label>
+      <input type="password" class="form-control" id="p_password" name="p_password" required maxlength="225" placeholder="Create a password">
+    </div>
+
+    <div class="mb-3">
+      <label for="p_address" class="form-label fw-semibold">Address:</label>
+      <textarea class="form-control" id="p_address" name="p_address" required maxlength="225" rows="3" placeholder="Enter your address"></textarea>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="p_dob" class="form-label fw-semibold">Date of Birth:</label>
+        <input type="date" class="form-control" id="p_dob" name="p_dob" required>
+      </div>
+      <div class="col-md-6">
+        <label for="p_tel" class="form-label fw-semibold">Phone Number (optional):</label>
+        <input type="tel" class="form-control" id="p_tel" name="p_tel" maxlength="15" placeholder="Enter your phone number">
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100 fw-semibold">ADD PATIENT</button>
+  </form>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+  <footer class="py-3 text-center mt-auto">
+     <small class="text-muted my-3 landing_footer">&copy; 2025 | NHS Hospital Management System</small>
+  </footer>
+{% endblock %}

@@ -12,6 +12,11 @@ class Treatment(db.Model):
     diagnosis = db.Column(db.String(255), nullable=True)
     prescription = db.Column(db.Text, nullable=True)
     notes = db.Column(db.Text, nullable=True)
+    
+    appointment = db.relationship(
+        'Appointment',
+        back_populates='treatment'
+    )
 
     def __repr__(self):
         return f"<Treatment for appointment {self.appointment_id}>"

@@ -1,4 +1,4 @@
-from app import create_app
+from app import create_app , create_default_admin
 from models import db
 from sqlalchemy import text
  
@@ -10,8 +10,10 @@ with app.app_context():
     print("Foreign keys enforcement:", result[0])
     
     db.drop_all()
-    print("Tables dropped successfully")
+    print("Tables dropped successfully") 
 
-    
     db.create_all()
     print("Tables created successfully")
+    
+    create_default_admin()
+    print("admin created")

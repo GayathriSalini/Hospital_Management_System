@@ -1,0 +1,258 @@
+/*LANDING PAGE*/
+body.landing-page {
+    background-image: url("/static/images/hospital_pic.jpg");
+    display: flex;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+body.landing-page::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 0;
+}
+
+.main_container, .nav_bar {
+    position: relative;
+    z-index: 1;
+}
+
+.landing_h2 , .landing_p , .landing_btn, .landing_footer {
+   color: white;
+}
+
+.landing_btn {
+    font-size: larger;
+}
+
+.text-muted {
+    color: #e9ecef !important;
+}
+
+.nav_bar a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav_bar {
+    color: white;
+    font-size: large;
+    
+}
+
+.nav_bar {
+    padding: 10px 20px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.main-container {
+    flex: 1;              
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;;
+}
+
+.footer {
+    padding: 1rem 0;
+    text-align: center;
+    margin-top: auto;                         
+    position: relative;
+}       
+
+/*REGISTER FORM */
+.form-label {
+    color: black;
+}
+
+/*LOGIN FORM */
+
+.custom-tab-bg .nav-link {
+  color: rgba(255,255,255,0.95);   
+  background: transparent;
+  font-weight: 500;
+  border: none;
+  transition: color 0.2s;
+}
+
+.custom-tab-bg .nav-link.active {
+  background: #fff;
+  color: #222;   
+  font-weight: 700;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+
+/*ADMIN DASHBOARD*/
+
+.main_container .dashboard {
+    border-radius: 2%;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    margin-top: 1rem;
+    margin-left: 0.5rem;
+    width: 270px;
+    height: 96vh;
+    background: #5A33A3;
+    color: #fff;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border-radius: 2%;
+}
+
+.sidebar .logo {
+    padding: 30px 0 20px 0;
+    
+    text-align: center;
+}
+
+.sidebar .logo a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu  li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 15px 36px;
+    font-size : 1.07rem;
+    border-radius: 16px 0 0 16px;
+    margin-bottom: 6px;
+    transition:  0.17s;
+}
+
+.menu li a:hover {
+    background: #6f46cf;
+}
+
+.main { 
+    margin-left: 250px;
+    padding-top: 20px;
+    padding-right: 25px;
+    padding-left: 35px;
+    min-height: 96vh; 
+    border-radius: 3%;
+    background: white;
+}
+
+.header { 
+    display: flex; 
+    justify-content: space-between;
+    align-items: center; 
+    border-radius: 4%;
+}
+
+.header h2 {
+   margin: 0;
+   font-weight: 600;
+   font-size: 1.9em;
+}
+
+.admin-info { 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+}
+
+.admin-info img { 
+    width: 36px; 
+    height: 36px; 
+    border-radius: 50%; 
+    border: 2px solid #a491cf; 
+}
+
+.stats-cards { 
+    display: flex; 
+    gap: 23px; 
+    margin: 26px 0 24px 0; 
+}
+
+.card {
+      background: #fff; 
+      border-radius: 20px; 
+      box-shadow: 0 2px 14px rgba(90,51,163,0.09);
+      flex: 1; 
+      text-align: center; 
+      padding: 26px 8px; 
+      min-width: 160px;
+}
+
+.card h2 { 
+    color: #5A33A3; 
+    font-size: 2.3em; 
+    font-weight: 700; 
+    margin: 0; 
+}
+
+.card p { 
+    font-size: 1.09em; 
+    color: #333; 
+    margin: 0; 
+}
+
+.task_btns {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.task_btn {
+    background: #5A33A3;
+    color: #fff; 
+    border: none; 
+    border-radius: 12px;
+    padding: 14px 22px; 
+    font-size: 1.09em; 
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(90,51,163,0.10); 
+}
+
+.task_btn:hover {
+    background: #6f46cf;
+}
+
+.panel {
+    background: #fff; 
+    border-radius: 16px; 
+    padding: 27px 20px 9px 20px;
+    box-shadow: 0 2px 13px rgba(90,51,163,0.09); margin-bottom: 22px;
+}
+
+.panel h3 {
+    margin-top: 0; 
+    color: #5A33A3; 
+    font-size: 1.1em; 
+    margin-bottom: 11px; 
+}
+
