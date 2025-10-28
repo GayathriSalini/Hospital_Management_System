@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+{% block body_class %} landing-page {% endblock %}
+
+{% block title %}Edit - Patient | NHS Hospital{% endblock %}
+
+{% block navbar %}
+<div class="container nav_bar">
+    <div class="d-flex justify-content-between align-items-center mt-2">
+        <div><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong> &nbsp; Health Management System</a></div>
+        <div><a href="">EDIT PATIENT DATA</a></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="main_container register_form d-flex justify-content-center align-items-start" style="min-height:40vh;">
+    <div class="container" style="max-width: 500px;">
+    <form method="POST" autocomplete="off" action="{{ url_for('admin.edit_patient', patient_id=patient.p_id) }}" class="p-4 bg-light rounded shadow">
+      <h2 class="text-center mb-2">Edit-Pateint Details</h2>
+     
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div style="max-width: 600px; width: 100%; margin-bottom: 1rem;">
+      {% for category, message in messages %}
+        <div class=" text-center alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+      <div class="mb-2">
+        <label for="p_name" class="form-label">Full Name:</label>
+        <input type="text" class="form-control" value="{{ patient.p_name }}" id="p_name" name="p_name" required>
+      </div>
+      <div class="mb-2">
+        <label for="p_email" class="form-label">Email:</label>
+        <input type="email" class="form-control" value="{{ patient.p_email }}" id="p_email" name="p_email" required>
+      </div>
+      <div class="mb-2">
+        <label for="p_tel" class="form-label">Phone Number:</label>
+        <input type="text" class="form-control" value="{{ patient.p_tel }}" id="p_tel" name="p_tel">
+      </div>
+      <div class="mb-2">
+        <label for="p_dob" class="form-label">DOB</label>
+        <input type="date" class="form-control" id="p_dob" value="{{ patient.p_dob }}" name="p_dob">
+      </div>
+      
+      <div class="mb-2">
+        <label for="p_address" class="form-label fw-semibold">Address:</label>
+        <textarea class="form-control" id="p_address" name="p_address" required maxlength="225" rows="3" placeholder="Enter your address">{{ patient.p_address }}</textarea>
+      </div>
+      
+      <div class="mb-2">
+        <label for="p_password" class="form-label">New Password (leave blank to keep current):</label>
+        <input class="form-control" type="password" name="new_password">
+      </div>
+      <button type="submit" class="btn btn-primary w-100 mt-2">SAVE PATIENT</button>
+    </form>
+  </div>
+</div>
+
+
+
+
+{% endblock %}

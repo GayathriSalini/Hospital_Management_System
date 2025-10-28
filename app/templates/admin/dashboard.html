@@ -6,15 +6,16 @@
 {% block content %}
 <div class="main_container dashboard mt-3 mx-2 bg-white" style="width=90%; height:88vh">
 <div class="sidebar">
-    <div class="logo" ><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong>  &nbsp;   Health Management System</a> </div>
+    <div class="logo " ><h4><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong>  &nbsp;   Health Management System</a></h4> </div>
     <ul class="menu">
       <li><a href="#">Dashboard</a></li>
       <li><a href="{{ url_for('admin.add_doctor') }}">Add Doctor</a></li>
       <li><a href="{{ url_for('admin.add_patient') }}">Add Patient</a></li>
-      <li><a href="#">Doctors</a></li>
-      <li><a href="#">Patients</a></li>
-      <li><a href="#">Appointments</a></li>
-      <li><a href="#">Search</a></li>
+      <li><a href="{{ url_for('admin.doctors_list') }}">Doctors</a></li>
+      <li><a href="{{ url_for('admin.patients_list') }}">Patients</a></li>
+      <li><a href="{{ url_for('admin.list_appointments')}}">Appointments</a></li>
+      <li><a onclick="window.location.href='{{ url_for('admin.admin_search') }}'">Search</a></li>
+      <li><a href="{{ url_for('admin.blacklist_search') }}">BlackList</a></li>
       <li><a href="#">Settings</a></li>
     </ul>
     
@@ -42,10 +43,10 @@
       </div>
     </div>
     <div class="task_btns">
-      <button class="task_btn">Add Doctor</button>
-      <button class="task_btn">Add Patient</button>
+      <button class="task_btn"><a style="color:white" href="{{ url_for('admin.add_doctor') }}">Add Doctor</a></button>
+      <button class="task_btn"><a style="color:white" href="{{ url_for('admin.add_patient') }}">Add Patient</a></button>
       <button class="task_btn">View Appointments</button>
-      <button class="task_btn">Search</button>
+      <button class="task_btn"><a style="color:white" href='{{ url_for('admin.admin_search') }}'>Search</a></button>
     </div>
     <div class="panel">
       <h3>Quick Notification</h3>
@@ -61,6 +62,5 @@
       </ul>
     </div>
   </div>
-  
 </div>
 {% endblock %}

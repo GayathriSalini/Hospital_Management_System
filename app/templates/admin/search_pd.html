@@ -1,0 +1,110 @@
+{% extends 'layout.html' %}
+{% block body_class %}landing-page{% endblock %}
+{% block title %}Search - Patient/Doctor | NHS Hospital{% endblock %}
+
+{% block navbar %}
+<div class="container nav_bar">
+  <div class="d-flex justify-content-between align-items-center mt-2">
+    <div>
+      <a href="{{ url_for('main.landing_page') }}">
+        <strong>NHS |</strong> Health Management System
+      </a>
+    </div>
+    <div>
+      <a href="{{ url_for('admin.admin_search') }}"><strong> SEARCH </strong> &nbsp; &nbsp;  PATIENT - DOCTOR</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="main_container d-flex flex-column align-items-center my-5" style="min-height: 70vh;">
+  <form method="GET" action="{{ url_for('admin.admin_search') }}" class="mb-4 w-100" style="max-width: 600px;">
+    <div class="row g-2 align-items-center">
+      <div class="col-auto">
+        <select name="search_type" id="search_type" class="form-select">
+          <option value="patient" {% if search_type == 'patient' %}selected{% endif %}>Patient</option>
+          <option value="doctor" {% if search_type == 'doctor' %}selected{% endif %}>Doctor</option>
+        </select>
+      </div>
+      <div class="col">
+        <input type="text" name="query" id="query_input" class="form-control" required placeholder="Search here" value="{{ query }}">
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary px-4">Search</button>
+      </div>
+    </div>
+  </form>
+
+  {% if search_type == 'patient' %}
+    {% if patients %}
+      <div class="card shadow mb-4 w-100" style="max-width: 700px;">
+        <div class="card-body">
+          <h3 class="card-title">Patient Search Results</h3>
+          <table class="table table-striped mt-3 mb-0">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Contact</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for p in patients %}
+              <tr>
+                <td>{{ p.p_id }}</td>
+                <td>{{ p.p_name }}</td>   
+                <td>{{ p.p_email }}</td>
+                <td>{{ p.p_tel }}</td>
+                <td></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {% elif query %}
+        <div class="alert alert-warning text-center" style="max-width: 600px; margin: 0 auto;">
+            No patients found.
+        </div>
+      {% endif %}
+  {% endif %}
+
+  {% if search_type == 'doctor' %}
+    {% if doctors %}
+      <div class="card shadow mb-4 w-100" style="max-width: 900px;">
+        <div class="card-body">
+          <h3 class="card-title">Doctor Search Results</h3>
+          <table class="table table-striped mt-3 mb-0">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Specialty</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for doctor, speciality in doctors %}
+              <tr>
+                <td>{{ doctor.doc_id }}</td>
+                <td>{{ doctor.doc_name }}</td>
+                <td>{{ doctor.doc_email }}</td>
+                <td>{{ doctor.doc_tel }}</td>
+                <td>{{ speciality.s_name }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {% elif query %}
+        <div class="alert alert-info text-center" style="max-width: 600px; margin: 0 auto;">
+            No doctors found.
+        </div>
+    {% endif %}
+  {% endif %}
+</div>
+{% endblock %}

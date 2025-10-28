@@ -26,3 +26,22 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
+
+
+/*SEARCH ADMIN DOCTOR/PATIENT*/
+function updateLabels() {
+  let type = document.getElementById('search_type').value;
+  let input = document.getElementById('query_input');
+  if (type === 'patient') {
+    input.placeholder = "Patient name, ID or contact";
+  } else {
+    input.placeholder = "Doctor name, email, NIC or specialization";
+  }
+}
+
+window.onload = updateLabels;
+document.getElementById('search_type').addEventListener('change', updateLabels);
+
+
+

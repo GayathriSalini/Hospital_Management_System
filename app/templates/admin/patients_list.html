@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+{% block body_class %} landing-page {% endblock %}
+{% block title %}Patients List | NHS Hospital{% endblock %}
+
+{% block navbar %}
+<div class="container nav_bar">
+  <div class="d-flex justify-content-between align-items-center mt-2">
+      <div><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong>  &nbsp;   Health Management System</a> </div>
+      <div ><a  href="{{ url_for('admin.patients_list') }}">PATIENT'S LIST</a></div>
+  </div>  
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="main_container pd_details mx-3 bg-white p-4" style="min-height: calc(100vh - 75px);">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>DOB</th>
+        <th>Contact</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for patient in patients %}
+      <tr>
+        <td>{{ patient.p_id }}</td>
+        <td>{{ patient.p_name }}</td>
+        <td>{{ patient.p_email }}</td>
+        <td>{{ patient.p_dob }}</td>
+        <td>{{ patient.p_tel }}</td>
+        <td>
+          <button type="button" class="detail_btn btn btn-info "><a href="#">View</a></button>
+          <button type="button" class="detail_btn btn btn-info"><a href="{{ url_for('admin.edit_patient', patient_id = patient.p_id) }}">Edit</a></button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

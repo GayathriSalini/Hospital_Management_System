@@ -1,0 +1,115 @@
+{% extends 'layout.html' %}
+{% block body_class %}landing-page{% endblock %}
+{% block title %}Admin BlackList | NHS Hospital{% endblock %}
+{% block navbar %}
+<div class="container nav_bar">
+  <div class="d-flex justify-content-between align-items-center mt-2">
+    <div>
+      <a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong> Health Management System</a>
+    </div>
+    <div>
+      <a href="{{ url_for('admin.blacklist_search') }}"><strong> BLACKLIST </strong> &nbsp; &nbsp; Doctor - Patient</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block content %}
+<div class="main_container d-flex flex-column align-items-center my-5" style="min-height: 70vh;">
+  <form method="GET" action="{{ url_for('admin.blacklist_search') }}" class="mb-4 w-100" style="max-width: 600px;">
+    <div class="row g-2 align-items-center">
+      <div class="col-auto">
+        <select name="search_type" id="search_type" class="form-select">
+          <option value="patient" {% if search_type == 'patient' %}selected{% endif %}>Patient</option>
+          <option value="doctor" {% if search_type == 'doctor' %}selected{% endif %}>Doctor</option>
+        </select>
+      </div>
+      <div class="col">
+        <input type="text" name="query" id="query_input" class="form-control" placeholder="Search here" value="{{ query }}">
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary px-4">Search</button>
+      </div>
+    </div>
+  </form>
+
+  {% if search_type == 'patient' %}
+    {% if patients %}
+      <div class="card shadow mb-4 w-100" style="max-width: 700px;">
+        <div class="card-body">
+          <h3 class="card-title">Patient Search Results</h3>
+          <table class="table table-striped mt-3 mb-0">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for p in patients %}
+              <tr>
+                <td>{{ p.p_id }}</td>
+                <td>{{ p.p_name }}</td>
+                <td>{{ p.p_email }}</td>
+                <td>{{ p.p_tel }}</td>
+                <td>
+                  <form method="POST" action="{{ url_for('admin.delete_pd', user_type='patient', user_id=p.p_id) }}" onsubmit="return confirm('Are you sure you want to delete this patient?');">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                  </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {% elif query %}
+      <div class="alert alert-warning text-center" style="max-width: 600px; margin: 0 auto;">
+        No patients found.
+      </div>
+    {% endif %}
+  {% endif %}
+
+  {% if search_type == 'doctor' %}
+    {% if doctors %}
+      <div class="card shadow mb-4 w-100" style="max-width: 900px;">
+        <div class="card-body">
+          <h3 class="card-title">Doctor Search Results</h3>
+          <table class="table table-striped mt-3 mb-0">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for doctor in doctors %}
+              <tr>
+                <td>{{ doctor.doc_id }}</td>
+                <td>{{ doctor.doc_name }}</td>
+                <td>{{ doctor.doc_email }}</td>
+                <td>{{ doctor.doc_tel }}</td>
+                <td>
+                  <form method="POST" action="{{ url_for('admin.delete_pd', user_type='doctor', user_id=doctor.doc_id) }}" onsubmit="return confirm('Are you sure you want to delete this doctor?');">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                  </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {% elif query %}
+      <div class="alert alert-info text-center" style="max-width: 600px; margin: 0 auto;">
+        No doctors found.
+      </div>
+    {% endif %}
+  {% endif %}
+</div>
+{% endblock %}
