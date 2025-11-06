@@ -22,16 +22,16 @@
   <form method="GET" action="{{ url_for('admin.admin_search') }}" class="mb-4 w-100" style="max-width: 600px;">
     <div class="row g-2 align-items-center">
       <div class="col-auto">
-        <select name="search_type" id="search_type" class="form-select">
+        <select name="search_type" id="search_type" class="form-select" style="height:3rem;">
           <option value="patient" {% if search_type == 'patient' %}selected{% endif %}>Patient</option>
           <option value="doctor" {% if search_type == 'doctor' %}selected{% endif %}>Doctor</option>
         </select>
       </div>
       <div class="col">
-        <input type="text" name="query" id="query_input" class="form-control" required placeholder="Search here" value="{{ query }}">
+        <input type="text" name="query" id="query_input" class="form-control" required placeholder="Search here" value="{{ query }}" style="height:3rem;">
       </div>
       <div class="col-auto">
-        <button type="submit" class="btn btn-primary px-4">Search</button>
+        <button type="submit" class="btn btn-primary px-4" style="height:3rem;">Search</button>
       </div>
     </div>
   </form>
@@ -76,7 +76,7 @@
       <div class="card shadow mb-4 w-100" style="max-width: 900px;">
         <div class="card-body">
           <h3 class="card-title">Doctor Search Results</h3>
-          <table class="table table-striped mt-3 mb-0">
+          <table class="table table-hover mt-3 mb-0 table-bordered">
             <thead>
               <tr>
                 <th>ID</th>

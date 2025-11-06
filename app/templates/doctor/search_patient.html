@@ -1,0 +1,75 @@
+{% extends 'layout.html' %}
+{% block body_class %}landing-page{% endblock %}
+{% block title %}Patient Search | NHS Hospital{% endblock %}
+
+
+
+{% block navbar %}
+<div class="container nav_bar">
+  <div class="d-flex justify-content-between align-items-center mt-2">
+    <div>
+      <a href="{{ url_for('main.landing_page') }}">
+        <strong>NHS |</strong> Health Management System
+      </a>
+    </div>
+    <div>
+      <a href="{{ url_for('doctor.dashboard') }}"><strong> SEARCH  </strong> &nbsp; &nbsp; ← Back to Dashboard</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<div class="main_container d-flex flex-column align-items-center my-5" style="min-height: 70vh;">
+ 
+
+<form method="GET" action="{{ url_for('doctor.search_patient') }}" class="mb-4 w-100" style="max-width: 600px;">
+  <div class="row g-2 align-items-center">
+    <div class="col">
+      <input type="text" name="query" class="form-control" placeholder="Search patients by name/ID" value="{{ query }}" required style="height:3rem;">
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary" style="height:3rem; ">Search Patient</button>
+    </div>
+  </div>
+</form>
+
+{% if query %}
+<div class="card shadow mb-4 w-100" style="max-width: 900px;">
+ <div class="card-body">
+  {% if patients %}
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr>
+          <th>Patient ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Contact</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for patient in patients %}
+        <tr>
+          <td>{{ patient.p_id }}</td>
+          <td>{{ patient.p_name }}</td>
+          <td>{{ patient.p_email }}</td>
+          <td>{{ patient.p_tel }}</td>
+          <td>
+            <a href="#" class="btn btn-sm btn-info">View Treatments</a>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+
+  {% elif query %}
+    <p class="text-center text-black">No patients found for "{{ query }}".</p>
+  {% endif %}
+</div>
+</div>
+</div>
+{% endif %}
+{% endblock %}

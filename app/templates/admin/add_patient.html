@@ -9,6 +9,7 @@
   <div class="d-flex justify-content-between align-items-center mt-4">
       <div>
         <a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong> &nbsp; Health Management System</a>
+        <div><a href="{{ url_for('admin.doctors_list') }}">ADD PATEINT | ← Back to Dashboard </a></div>
      </div>
 
   </div>
@@ -19,9 +20,9 @@
 <div class="main_container register_form d-flex justify-content-center align-items-center" style="min-height: 80vh;">
   
   <form action="{{ url_for('admin.add_patient') }}" method="POST" class="p-4 bg-light rounded shadow" style="max-width: 600px; width: 100%;">
-    <h2 class="text-center">“Your Heath Journey Begins Here”</h2>
-   
-    <!-- Flash Message -->
+    <h2 class="text-center">Add-Patient Details</h2>
+
+  
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
     <div style="max-width: 600px; width: 100%; margin-bottom: 1rem;">

@@ -1,0 +1,126 @@
+{% extends 'layout.html' %}
+{% block body_class %} landing-page {% endblock %}
+{% block title %}My Availability{% endblock %}
+
+{% block navbar %}
+<div class="container nav_bar">
+    <div class="d-flex justify-content-between align-items-center mt-2">
+        <div><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong> &nbsp; Health Management System</a></div>
+        <div>
+         <a href="{{ url_for('doctor.dashboard') }}"><strong> Dr.&nbsp;{{doctor.doc_name}} </strong> &nbsp;  ← Back to Dashboard </a>
+        </div>
+    </div>  
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="main_container dashboard mt-1 mx-auto bg-white" style="max-width: 99%; min-height: auto; border-radius: 2rem; padding: 20px;">
+  <h2 class="text-center pt-2">Manage Your Availability for the Next 7 Days</h2>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <div>
+    {% for category, message in messages %}
+    <div class="alert alert-{{category}}">{{ message }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  {% endwith %}
+
+  <div style="overflow-x: auto;">
+    <table class="table table-hover table-bordered mt-3" style="width: 100%; max-width: 800px; margin: 0 auto;">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Fixed Time</th>    
+          <th>Saved Availability</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for day in week_days %}
+        <tr>
+          <td>{{ day.date.strftime('%A, %b %d, %Y') }}</td>
+          
+          <td>
+            {% set slot = schedules | selectattr('schedule_date', 'equalto', day.date) | list %}
+            {% if slot %}
+              {% if slot[0].title == 'On Leave' %}
+                00:00
+              {% else %}
+                {{ slot[0].schedule_time.strftime('%H:%M') if slot[0].schedule_time else day.fixed_time.strftime('%H:%M') }}
+              {% endif %}
+            {% else %}
+              {{ day.fixed_time.strftime('%H:%M') }}
+            {% endif %}
+          </td>
+
+          <td>
+            {% if slot %}
+              {% if slot[0].title == 'On Leave' %}
+                <span style="color:red; font-weight:bold;">ON LEAVE</span>
+              {% else %}
+                {{ slot[0].title }} (Slots: {{ slot[0].nop or 'Unlimited'}})
+              {% endif %}
+            {% else %}
+              Scheduled
+            {% endif %}
+          </td>
+
+          <td>
+            <button
+              onclick="showForm('{{ day.date.strftime('%Y-%m-%d') }}', '{{ day.fixed_time.strftime('%H:%M') }}', '{{ slot[0].schedule_id if slot else '' }}', '{{ slot[0].title if slot else '' }}', '{{ slot[0].nop if slot else '' }}')"
+              class="btn btn-primary btn-sm">Add / Update</button>
+
+            <form method="POST" action="{{ url_for('doctor.availability') }}" style="display:inline;">
+              <input type="hidden" name="schedule_date" value="{{ day.date.strftime('%Y-%m-%d') }}">
+              <input type="hidden" name="mark_leave" value="1">
+              <button type="submit" class="btn btn-danger btn-sm ms-1">Mark Leave</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div id="availability-form" style="display:none; margin: 40px auto 0; padding: 20px; max-width: 500px; border: 1px solid #ddd; border-radius: 10px; background:#f9f9f9;">
+    <h4 id="form-title">Add / Update Availability</h4>
+    <form method="POST" action="{{ url_for('doctor.availability') }}">
+      <input type="hidden" name="schedule_id" id="schedule_id" value="">
+      <input type="hidden" name="schedule_date" id="schedule_date" value="">
+      <div class="mb-3">
+        <label for="schedule_time">Time (optional)</label>
+        <input name="schedule_time" id="schedule_time" type="time" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="title">Title (optional)</label>
+        <input name="title" id="title" type="text" placeholder="e.g. Morning Shift" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="nop">Number of Slots</label>
+        <input name="nop" id="nop" type="number" min="0" placeholder="Leave empty for unlimited" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-success">Save Availability</button>
+      <button type="button" onclick="hideForm()" class="btn btn-secondary ms-2">Cancel</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  function showForm(date, time, schedule_id, title, nop) {
+    document.getElementById('availability-form').style.display = 'block';
+    document.getElementById('schedule_date').value = date;
+    document.getElementById('schedule_time').value = time || '';
+    document.getElementById('schedule_id').value = schedule_id || '';
+    document.getElementById('title').value = title || '';
+    document.getElementById('nop').value = nop || '';
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
+  function hideForm() {
+    document.getElementById('availability-form').style.display = 'none';
+  }
+</script>
+
+{% endblock %}

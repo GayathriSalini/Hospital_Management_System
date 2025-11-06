@@ -12,6 +12,8 @@
 </div>
 {% endblock %}
 
+
+
 {% block content %}
 {% set active_tab = request.args.get('active_tab') or 'patient' %}
 <div class="main_container d-flex flex-column align-items-center justify-content-center" style="min-height: 80vh;">
@@ -53,8 +55,10 @@
               {% endif %}
             {% endwith %}
           {% endif %}
+                
+
           <div class="mb-3">
-            <label for="p_email" class="form-label">Email:</label>
+            <label for="p_email" class="form-label">Email</label>
             <input type="email" class="form-control" id="p_email" name="p_email" required />
           </div>
           <div class="mb-3">
@@ -63,6 +67,9 @@
           </div>
           <input type="hidden" name="role" value="patient" />
           <button type="submit" class="btn btn-primary w-100">Login as Patient</button>
+          <div class="text-center pt-2" >
+            <a style="color:blue;" href={{ url_for('auth.register') }}>First time? REGISTER HERE</a>
+          </div>
         </form>
       </div>
 
@@ -83,7 +90,7 @@
             {% endwith %}
           {% endif %}
           <div class="mb-3">
-            <label for="d_email" class="form-label">Email:</label>
+            <label for="d_email" class="form-label">Email</label>
             <input type="email" class="form-control" id="d_email" name="d_email" required />
           </div>
           <div class="mb-3">
@@ -112,7 +119,7 @@
             {% endwith %}
           {% endif %}
           <div class="mb-3">
-            <label for="a_email" class="form-label">Email:</label>
+            <label for="a_email" class="form-label">Email</label>
             <input type="email" class="form-control" id="a_email" name="a_email" required />
           </div>
           <div class="mb-3">
@@ -123,7 +130,6 @@
           <button type="submit" class="btn btn-primary w-100">Login as Admin</button>
         </form>
       </div>
-
     </div>
   </div>
 </div>

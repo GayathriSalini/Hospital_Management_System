@@ -2,14 +2,32 @@ import os
 from flask import Flask
 from sqlalchemy import event
 from sqlalchemy.engine import Engine
-from models import db, Admin
+from models import db, Admin , Doctor, Patient
 from app.routes import register_routes
 from werkzeug.security import generate_password_hash
-
+from flask_migrate import Migrate
+from flask_login import LoginManager
 
 def create_app():
     app = Flask(__name__,template_folder='templates',static_folder='static')
+     
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    
 
+    login_manager.init_app(app)
+    login_manager.login_view = 'auth.login'  
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        user = Admin.query.get(int(user_id))
+        if user:
+            return user
+        user = Doctor.query.get(int(user_id))
+        if user:
+            return user
+        user = Patient.query.get(int(user_id))
+        return user 
     
     base_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
@@ -24,7 +42,10 @@ def create_app():
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'your-very-secret-key'
 
     db.init_app(app)
+
+    migrate = Migrate(app, db)
     register_routes(app)
+    
 
     @event.listens_for(Engine, "connect")
     def set_sqlite_pragma(dbapi_connection, connection_record):

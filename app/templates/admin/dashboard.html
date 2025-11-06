@@ -4,7 +4,7 @@
 
 
 {% block content %}
-<div class="main_container dashboard mt-3 mx-2 bg-white" style="width=90%; height:88vh">
+<div class="main_container dashboard mt-3 mx-2 bg-white" style="width=90%; height:88vh; border-radius:8px;">
 <div class="sidebar">
     <div class="logo " ><h4><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong>  &nbsp;   Health Management System</a></h4> </div>
     <ul class="menu">
@@ -14,9 +14,8 @@
       <li><a href="{{ url_for('admin.doctors_list') }}">Doctors</a></li>
       <li><a href="{{ url_for('admin.patients_list') }}">Patients</a></li>
       <li><a href="{{ url_for('admin.list_appointments')}}">Appointments</a></li>
-      <li><a onclick="window.location.href='{{ url_for('admin.admin_search') }}'">Search</a></li>
       <li><a href="{{ url_for('admin.blacklist_search') }}">BlackList</a></li>
-      <li><a href="#">Settings</a></li>
+      <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
     </ul>
     
   </div>
@@ -24,7 +23,7 @@
     <div class="header">
       <h2>Welcome, Admin!</h2>
       <div class="admin-info">
-        <img src="{{ url_for('static', filename='images/admin_photo.png')}}" alt="Profile">
+        <img src="{{ url_for('static', filename='images/admin_photo.png')}}" alt="admin_Profile">
         <span>admin@nhshospital.com</span>
       </div>
     </div>

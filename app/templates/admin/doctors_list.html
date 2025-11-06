@@ -7,7 +7,7 @@
 <div class="container nav_bar">
     <div class="d-flex justify-content-between align-items-center mt-2">
         <div><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong> &nbsp; Health Management System</a></div>
-        <div><a href="{{ url_for('admin.doctors_list') }}">DOCTOR'S LIST</a></div>
+        <div><a href="{{ url_for('admin.dashboard') }}">DOCTOR'S LIST | ← Back to Dashboard</a></div>
     </div>
 </div>
 {% endblock %}
@@ -23,6 +23,7 @@
                 <th>NIC No</th>
                 <th>Contact</th>
                 <th>Specialty</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -35,7 +36,6 @@
                 <td>{{ doctor.doc_tel }}</td>
                 <td>{{ doctor.speciality.s_name }}</td>
                 <td>
-                    <button type="button" class="detail_btn btn btn-info "><a href="#">View</a></button>
                     <button type="button" class="detail_btn btn btn-info"><a href="{{ url_for('admin.edit_doctor', doctor_id = doctor.doc_id) }}">Edit</a></button>
                 </td>
             </tr>

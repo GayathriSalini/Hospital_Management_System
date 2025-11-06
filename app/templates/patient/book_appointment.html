@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block body_class %}landing-page{% endblock %}
+
+{% block title %}Book Appointment{% endblock %}
+
+{% block navbar %}
+<div class="container nav_bar">
+    <div class="d-flex justify-content-between align-items-center mt-2">
+        <div><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong> &nbsp; Health Management System</a></div>
+        <div><a href="{{ url_for('patient.dashboard') }}"><strong>PATIENT</strong>&nbsp; &nbsp; ← Back to Dashboard</a></div>
+    </div>       
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="main_container register_form d-flex justify-content-center align-items-start" style="min-height:40vh; margin-top:2rem;">
+  <div class="container" style="max-width:500px;">
+    
+    <form method="POST" class="p-4 bg-light rounded shadow" action="{{ url_for('patient.book_appointment') }}">
+      <h2 class="mb-4 text-center">Book Appointment</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="alerts">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+    
+    
+      <div class="mb-3">
+            <label for="doctor_id" class="form-label">Select Doctor</label>
+            <select name="doctor_id" id="doctor_id" class="form-control" required>
+                <option value="" disabled selected>Select a doctor</option>
+                {% for doctor in doctors %}
+                    <option value="{{ doctor.doc_id }}">
+                        {{ doctor.doc_name }} ({{ doctor.speciality.s_name if doctor.speciality else 'No speciality' }})
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="appointment_date" class="form-label">Select Date</label>
+            <input type="date" id="appointment_date" class="form-control" name="appointment_date" class="form-control" required min="{{ datetime.utcnow().date().isoformat() }}">
+        </div>
+        <div class="mb-4">
+            <label for="appointment_time" class="form-label">Select Time</label>
+            <input type="time" id="appointment_time" class="form-control" name="appointment_time" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Book Appointment</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block footer %}
+<footer class="py-3 text-center mt-auto">
+  <small class="text-muted my-3 landing_footer" style="opacity:0.5;">&copy; 2025 | NHS Hospital Management System</small>
+</footer>
+{% endblock %}

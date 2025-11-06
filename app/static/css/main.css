@@ -1,4 +1,7 @@
 /*LANDING PAGE*/
+
+
+
 body.landing-page {
     background-image: url("/static/images/hospital_pic.jpg");
     display: flex;
@@ -80,7 +83,48 @@ a {
     text-align: center;
     margin-top: auto;                         
     position: relative;
-}       
+}   
+
+
+/*BUTTONS ACTION*/
+.action-buttons .btn {
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+
+.btn-view {
+  background-color: #03578b;
+}
+
+.btn-add {
+  background-color: #0467a4;
+}
+
+.btn-complete {
+  background-color: #0476bd;
+}
+
+.btn-cancel {
+  background-color: #0586d6;
+}
+
+.btn-view:hover,
+.btn-add:hover,
+.btn-complete:hover,
+.btn-cancel:hover {
+  background-color: #54ABCF;
+  transform: translateY(-2px);
+}
+
+
+
+
 
 /*REGISTER FORM */
 .form-label {
@@ -184,13 +228,22 @@ a {
    color: #00537A;
 }
 
-.admin-info { 
+.admin-info, .patient-info { 
     display: flex; 
     align-items: center; 
     gap: 12px; 
 }
 
 .admin-info img { 
+    width: 36px; 
+    height: 36px; 
+    border-radius: 50%; 
+    border: 2px solid #011c40; 
+}
+
+
+
+.patient-info img { 
     width: 36px; 
     height: 36px; 
     border-radius: 50%; 
@@ -288,3 +341,121 @@ a {
 .list_appo{
     border-radius: 2%;
 }
+
+a{
+    color: white
+}
+
+
+/*PATIENT DASHBOARD*/
+
+.profile-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 18px rgba(34, 82, 160, 0.10);
+    padding: 28px 32px;
+    width: 320px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.profile-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+.edit-btn {
+    background: #e4ebfa;
+    color: #254e97;
+    border: none;
+    border-radius: 12px;
+    padding: 6px 16px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+.edit-btn:hover {
+    background: #d0e0ff;
+}
+.profile-card-body div {
+    margin-bottom: 7px;
+    font-size: 0.99rem;
+}
+/* 
+.main_container {
+    display: flex;
+    height: 96vh;
+}
+.sidebar {
+    width: 220px;
+    background-color: #254e97;
+    color: white;
+    padding-top: 20px;
+}
+.sidebar .logo {
+    padding-left: 16px;
+    margin-bottom: 30px;
+}
+.sidebar .menu {
+    list-style: none;
+    padding-left: 0;
+}
+.sidebar .menu li {
+    margin-bottom: 15px;
+}
+.sidebar .menu a {
+    color: white;
+    text-decoration: none;
+    padding-left: 25px;
+    display: block;
+    font-weight: 500;
+}
+.sidebar .menu a:hover {
+    background-color: #1b3a75;
+}
+.main {
+    flex: 1;
+    padding: 20px 40px;
+    overflow-y: auto;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.admin-info span {
+    font-weight: 500;
+    font-size: 1rem;
+}
+.appointments-section {
+    margin-top: 30px;
+    max-width: 100%;
+}
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.table th,
+.table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+.btn-cancel {
+    background-color: #e74c3c;
+    border: none;
+    padding: 6px 14px;
+    color: white;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+.btn-cancel:hover {
+    background-color: #c0392b;
+}
+ */

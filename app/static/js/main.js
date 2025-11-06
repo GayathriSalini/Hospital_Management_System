@@ -44,4 +44,56 @@ window.onload = updateLabels;
 document.getElementById('search_type').addEventListener('change', updateLabels);
 
 
+/*Doctor Availability */
 
+
+function showForm(date, time, id, title, nop) {
+  document.getElementById('availability-form').style.display = 'block';
+  document.body.style.overflowY = 'auto';
+  document.getElementById('schedule_date').value = date;        
+  document.getElementById('schedule_time').value = time || '';
+  document.getElementById('schedule_id').value = id || '';
+  document.getElementById('title').value = title || '';
+  document.getElementById('nop').value = nop || '';
+  document.getElementById('form-title').innerText = id ? 'Update Availability' : 'Add Availability';
+}
+
+function hideForm() {
+  document.getElementById('availability-form').style.display = 'none';
+  document.body.style.overflowY = '';  
+  document.getElementById('schedule_id').value = '';
+  document.getElementById('schedule_time').value = '';
+  document.getElementById('title').value = '';
+  document.getElementById('nop').value = '';
+}
+
+function markLeave(date, scheduleId) {
+  if(confirm('Mark ' + date + ' as Leave?')) {
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = "{{ url_for('doctor.availability') }}";
+    form.style.display = 'none';
+
+    const scheduleInput = document.createElement('input');
+    scheduleInput.type = 'hidden';
+    scheduleInput.name = 'schedule_id';
+    scheduleInput.value = scheduleId || '';
+
+    const dateInput = document.createElement('input');
+    dateInput.type = 'hidden';
+    dateInput.name = 'schedule_date';
+    dateInput.value = date;
+
+    const titleInput = document.createElement('input');
+    titleInput.type = 'hidden';
+    titleInput.name = 'title';
+    titleInput.value = 'On Leave';
+
+    form.appendChild(scheduleInput);
+    form.appendChild(dateInput);
+    form.appendChild(titleInput);
+
+    document.body.appendChild(form);
+    form.submit();
+  }
+}

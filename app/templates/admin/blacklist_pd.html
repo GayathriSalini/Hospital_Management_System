@@ -8,11 +8,13 @@
       <a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong> Health Management System</a>
     </div>
     <div>
-      <a href="{{ url_for('admin.blacklist_search') }}"><strong> BLACKLIST </strong> &nbsp; &nbsp; Doctor - Patient</a>
+      <a href="{{ url_for('admin.dashboard') }}"><strong> BLACKLIST</strong> &nbsp; &nbsp; | ← Back to Dashboard </a>
     </div>
   </div>
 </div>
 {% endblock %}
+
+
 {% block content %}
 <div class="main_container d-flex flex-column align-items-center my-5" style="min-height: 70vh;">
   <form method="GET" action="{{ url_for('admin.blacklist_search') }}" class="mb-4 w-100" style="max-width: 600px;">

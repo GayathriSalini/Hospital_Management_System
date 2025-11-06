@@ -40,7 +40,7 @@ def delete_pd(user_type, user_id):
     if user:
         db.session.delete(user)
         db.session.commit()
-        flash(f'{user_type.capitalize()} deleted successfully.', 'success')
+        
     else:
         flash(f'{user_type.capitalize()} not found.', 'danger')
 

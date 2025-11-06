@@ -1,0 +1,85 @@
+{% extends 'layout.html' %}
+{% block body_class %}landing-page{% endblock %}
+{% block title %}Search - Doctor | NHS Hospital{% endblock %}
+
+{% block navbar %}
+<div class="container nav_bar">
+  <div class="d-flex justify-content-between align-items-center mt-2">
+    <div>
+      <a href="{{ url_for('main.landing_page') }}">
+        <strong>NHS |</strong> Health Management System
+      </a>
+    </div>
+    <div>
+      <a href="{{ url_for('patient.book_appointment') }}"><strong> SEARCH </strong> &nbsp; &nbsp; ← Book Appointment </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="main_container d-flex flex-column align-items-center my-5" style="min-height:70vh; max-width:900px; margin:auto;">
+  <form method="GET" action="{{ url_for('patient.search_doctor') }}" class="mb-4 w-100 d-flex gap-2 align-items-center">
+    <select name="search_by" class="form-select" style="width:150px; height:3rem;" onchange="this.form.submit()" >
+      <option value="name"  {% if search_by == 'name' %}selected{% endif %} >Name</option>
+      <option value="speciality" {% if search_by == 'speciality' %}selected{% endif %}>Speciality</option>
+    </select>
+    
+    {% if search_by == 'name' %}
+      <input type="text" name="query" class="form-control" required placeholder="Search doctors by name" value="{{ query }}" style="height:3rem;">
+    {% else %}
+      <select name="query" class="form-select" style="height:3rem;" required>
+        <option value="">Select Speciality</option>
+        {% for speciality in specialities_list %}
+          <option value="{{ speciality.id }}" {% if query|int == speciality.id %}selected{% endif %}>
+            {{ speciality.s_name }}
+          </option>
+        {% endfor %}
+      </select>
+    {% endif %}
+    
+    <button type="submit" style="height:3rem; width:150px;" class="btn btn-primary">Search</button>
+  </form>
+  
+  {% if query %}
+    {% if doctors %}
+      <div class="card shadow mb-4 w-100" style="max-width: 900px;">
+        <div class="card-body">
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Contact</th>
+              <th>Speciality</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for doctor in doctors %}
+              <tr>
+                <td>Dr. {{ doctor.doc_name }}</td>
+                <td>{{ doctor.doc_email }}</td>
+                <td>{{ doctor.doc_tel }}</td>
+                <td>{{ doctor.speciality.s_name if doctor.speciality else 'N/A' }}</td>
+                <td>
+                  <a href="{{ url_for('patient.book_appointment')}}" class="btn btn-sm btn-success">Book</a>
+                 <a href="{{ url_for('patient.doc_availability', doc_id=doctor.doc_id) }}" class="btn btn-sm btn-success">See Available</a>
+
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    </div>
+    {% else %}
+      <div class="alert alert-warning text-center w-100">
+        No doctors found matching your query.
+      </div>
+    {% endif %}
+  {% endif %}
+  
+</div>
+{% endblock %}
