@@ -3,10 +3,13 @@ from models import Specialities, Doctor, db, Patient
 from werkzeug.security import generate_password_hash
 from . import admin_bp
 from datetime import datetime
+from flask_login import login_required, current_user
 
 @admin_bp.route('/add_patient', methods=['GET','POST'])
+@login_required 
 def add_patient():
-    if 'user_role' not in session or session['user_role'] != 'admin':
+    if getattr(current_user, 'a_email', None) != 'admin@nhshospital.com':
+        flash("Don't have permission","danger")
         return redirect(url_for('auth.login'))
     
     if request.method == 'POST':

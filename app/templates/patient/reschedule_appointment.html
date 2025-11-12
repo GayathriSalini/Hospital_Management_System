@@ -1,36 +1,55 @@
 {% extends 'layout.html' %}
-{% block body_class %}landing-page{% endblock %}
+{% block body_class %} landing-page {% endblock %}
 {% block title %}Reschedule Appointment{% endblock %}
 
 {% block navbar %}
 <div class="container nav_bar">
     <div class="d-flex justify-content-between align-items-center mt-2">
         <div><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong> &nbsp; Health Management System</a></div>
-        <div><a href="{{ url_for('patient.dashboard') }}"><strong>RESHEDULE PATIENT</strong>&nbsp; &nbsp; ← Back to Dashboard</a></div>
+        <div><a href="{{ url_for('patient.dashboard') }}"><strong>RESCHEDULE PATIENT</strong> &nbsp; ← Back to Dashboard</a></div>
     </div>
 </div>
 {% endblock %}
 
 {% block content %}
-<div class="main_container register_form d-flex justify-content-center align-items-start" style="min-height:40vh;">
-    <div class="container" style="max-width: 500px;">
-    
+<div class="main_container register_form d-flex justify-content-center align-items-start" style="min-height:40vh; margin-top:2rem;">
+  <div class="container" style="max-width:500px;">
 
-    <form method="POST" action="{{ url_for('patient.reschedule_appointment', appo_id=appointment.appo_id) }}">
-       <h2 class="mb-4 text-center">Reschedule Appointment</h2>
-        <div class="mb-3">
-            <label for="appo_date" class="form-label">New Appointment Date</label>
-            <input type="date" id="appo_date" name="appo_date" class="form-control" value="{{ appointment.appo_date }}" required>
-        </div>
+       
 
-        <div class="mb-3">
-            <label for="appo_time" class="form-label">New Appointment Time</label>
-            <input type="time" id="appo_time" name="appo_time" class="form-control" value="{{ appointment.appo_time.strftime('%H:%M') }}" required>
-        </div>
+        <form method="POST" class="p-4 bg-light rounded shadow" action="{{ url_for('patient.reschedule_appointment', appo_id=appointment.appo_id) }}">
+            <h2 class="mb-4 text-center">Reschedule Appointment</h2>
 
-        <button type="submit" class="btn btn-primary">Reschedule</button>
-        <a href="{{ url_for('patient.dashboard') }}" class="btn btn-secondary ms-2">Cancel</a>
-    </form>
-</div>
+             {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show py-2 px-3" role="alert"
+                style="display:inline-block;max-width:400px;min-width:400px;font-size:1rem;">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                    style="padding-top: 0.7rem; padding-right: 1rem;"></button>
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+
+
+            <div class="mb-3">
+                <label for="appo_date" class="form-label">New Appointment Date</label>
+                <input type="date" id="appo_date" name="appo_date" class="form-control"
+                    value="{{ appointment.appo_date.strftime('%Y-%m-%d') }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="appo_time" class="form-label">New Appointment Time</label>
+                <input type="time" id="appo_time" name="appo_time" class="form-control"
+                    value="{{ appointment.appo_time.strftime('%H:%M') }}" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Reschedule</button>
+            <a href="{{ url_for('patient.dashboard') }}" class="btn btn-secondary ms-2">Cancel</a>
+        </form>
+    </div>
 </div>
 {% endblock %}

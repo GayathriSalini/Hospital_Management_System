@@ -10,7 +10,7 @@
             <li><a href="{{ url_for('patient.dashboard') }}">Dashboard</a></li>
             <li><a href="{{ url_for('patient.search_doctor') }}">Search Doctors</a></li>
             <li><a href="{{ url_for('patient.book_appointment') }}">Book Appointment</a></li>
-            <li><a href="#">View Appointments</a></li>
+            <li><a href="{{url_for('patient.appointments')}}">View Appointments</a></li>
             <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
         </ul>
     </div>

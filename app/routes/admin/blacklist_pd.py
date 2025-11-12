@@ -1,9 +1,16 @@
 from flask import render_template, url_for, flash, request, redirect
 from . import admin_bp
 from models import db, Patient, Doctor
+from flask_login import login_required, current_user
+
 
 @admin_bp.route('/blacklist_search', methods=['GET'])
 def blacklist_search():
+    if not hasattr(current_user, 'a_email') or current_user.a_email != "admin@nhshospital.com":
+      
+        return redirect(url_for('auth.login'))
+    
+    
     search_type = request.args.get('search_type', 'patient')
     query = request.args.get('query', '').strip()
 

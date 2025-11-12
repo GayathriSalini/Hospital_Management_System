@@ -1,0 +1,82 @@
+{% extends 'layout.html' %}
+{% block body_class %} landing-page {% endblock %}
+{% block title %} Add Diagnosis | Doctor Dashboard {% endblock %}
+
+{% block navbar %}
+<div class="container nav_bar">
+    <div class="d-flex justify-content-between align-items-center mt-2">
+        <div><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong> &nbsp; Health Management System</a></div>
+        <div><a href="{{ url_for('doctor.view_appointment') }}"><strong>ADD TREATMENT </strong> | ← Back to Appointments </a></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="main_container  mx-3 bg-white p-4 shadow-sm rounded-4"
+     style="width: 98%; height: 91vh; overflow-y: auto;">
+
+    <div class="d-flex flex-wrap gap-4 mb-4">
+
+        <div class="card flex-fill shadow-sm border-0" style="min-width: 300px;">
+            <div class="card-header text-white">
+                <h5 class="mb-0">Patient Information</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>ID No:</strong> {{ patient.p_id }}</p>
+                <p><strong>Name:</strong> {{ patient.p_name }}</p>
+                <p><strong>Email:</strong> {{ patient.p_email }}</p>
+                <p><strong>Contact:</strong> {{ patient.p_tel }}</p>
+                <p><strong>Address:</strong> {{ patient.p_address }}</p>
+            </div>
+        </div>
+
+        <div class="card flex-fill shadow-sm border-0" style="min-width: 300px;">
+            <div class="card-header  text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Medical Information</h5>
+                <a href="{{ url_for('doctor.edit_patient_medical', patient_id=patient.p_id) }}" class="edit-btn">
+                    Edit
+                </a>
+            </div>
+            <div class="card-body">
+                <p><strong>Date of Birth:</strong> {{ patient.p_dob }}</p>
+                <p><strong>Blood Group:</strong> {{ patient_details.blood_group or 'N/A' }}</p>
+                <p><strong>Height:</strong> {{ patient_details.height_cm or 'N/A' }} cm</p>
+                <p><strong>Weight:</strong> {{ patient_details.weight_kg or 'N/A' }} kg</p>
+                <p><strong>Allergies:</strong> {{ patient_details.allergies or 'None' }}</p>
+                <p><strong>Chronic Conditions:</strong> {{ patient_details.chronic_conditions or 'None' }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0 mx-auto" style="max-width: 700px;">
+        <div class="card-header text-white" style="background-color:#00537A">
+            <h5 class="mb-0">Add Diagnosis & Treatment</h5>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('doctor.add_treatment', appo_id=appointment.appo_id) }}">
+                
+                <div class="mb-3">
+                    <label for="diagnosis" class="form-label fw-bold">Diagnosis</label>
+                    <textarea id="diagnosis" name="diagnosis" class="form-control" rows="2" placeholder="diagnosis details" required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="notes" class="form-label fw-bold">Treatment Notes</label>
+                    <textarea id="notes" name="notes" class="form-control" rows="3" placeholder="Treatment notes"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="prescription" class="form-label fw-bold">Prescription</label>
+                    <textarea id="prescription" name="prescription" class="form-control" rows="3" placeholder="Prescribed medications..."></textarea>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="{{ url_for('doctor.view_appointment') }}" class="btn text-white btn-cancel px-4">Cancel</a>
+                    <button type="submit" class="btn text-white btn-add px-4">Save Treatment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

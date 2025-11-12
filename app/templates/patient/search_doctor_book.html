@@ -11,7 +11,7 @@
       </a>
     </div>
     <div>
-      <a href="{{ url_for('patient.book_appointment') }}"><strong> SEARCH </strong> &nbsp; &nbsp; ← Book Appointment </a>
+      <a href="{{ url_for('patient.book_appointment') }}"><strong> SEARCH </strong>| &nbsp; &nbsp; ← Book Appointment </a>
     </div>
   </div>
 </div>
@@ -63,8 +63,8 @@
                 <td>{{ doctor.doc_tel }}</td>
                 <td>{{ doctor.speciality.s_name if doctor.speciality else 'N/A' }}</td>
                 <td>
-                  <a href="{{ url_for('patient.book_appointment')}}" class="btn btn-sm btn-success">Book</a>
-                 <a href="{{ url_for('patient.doc_availability', doc_id=doctor.doc_id) }}" class="btn btn-sm btn-success">See Available</a>
+                  <a href="{{ url_for('patient.book_appointment')}}" class="btn text-white btn-sm btn-view">Book</a>
+                 <a href="{{ url_for('patient.doc_availability', doc_id=doctor.doc_id) }}" class="btn text-white btn-sm btn-complete">See Available</a>
 
                 </td>
               </tr>

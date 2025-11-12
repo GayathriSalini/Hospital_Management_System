@@ -23,7 +23,8 @@ import app.routes.patient.see_docAvalability
 import app.routes.patient.cancel_appointment
 import app.routes.patient.edit_appointment
 import app.routes.patient.reschedule_appointment
-
+import app.routes.patient.view_appointment
+import app.routes.patient.treatment_history
 
 from app.routes.doctor import doctor_bp
 import app.routes.doctor.dashboard 
@@ -32,7 +33,8 @@ import app.routes.doctor.search_patient
 import app.routes.doctor.view_appointment
 import app.routes.doctor.update_status
 import app.routes.doctor.add_treatment
-
+import app.routes.doctor.edit_pmedical
+import app.routes.doctor.treatment_history
 
 def register_routes(app):
     app.register_blueprint(main_bp)

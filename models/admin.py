@@ -7,6 +7,8 @@ class Admin(db.Model, UserMixin):
     a_email= db.Column(db.String(225),primary_key=True,nullable=False,unique=True)
     a_password = db.Column(db.String(225), nullable=False)
         
+    def get_id(self):
+        return str(self.a_email)
     
     def __repr__(self):
         return f"<Admin {self.a_email}>"

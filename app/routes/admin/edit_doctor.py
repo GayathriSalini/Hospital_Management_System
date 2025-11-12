@@ -2,9 +2,16 @@ from flask import request, redirect, session, render_template , redirect, url_fo
 from . import admin_bp 
 from models import Doctor, db , Specialities
 from werkzeug.security  import generate_password_hash, check_password_hash
+from flask_login import login_required, current_user
+
 
 @admin_bp.route('/doctors/edit/<int:doctor_id>', methods = ['GET', 'POST'])
+@login_required
 def edit_doctor(doctor_id):
+    if not hasattr(current_user, 'a_email') or current_user.a_email != "admin@nhshospital.com":
+       
+        return redirect(url_for('auth.login'))
+   
     doctor = Doctor.query.get_or_404(doctor_id)
     specialties = Specialities.query.all()
     

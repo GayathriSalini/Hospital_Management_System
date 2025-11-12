@@ -76,6 +76,24 @@ a {
     align-items: center;
     text-align: center;
     padding: 0 20px;;
+    
+}
+
+
+.main_container::-webkit-scrollbar {
+    border-radius: 2rem;
+    background: #f8f9fa;
+}
+
+.add_treatment {
+    border-bottom-left-radius: 2rem;
+    border-top-left-radius: 2rem;
+    z-index: 1;
+    position: relative;
+}
+.add_treatment::-webkit-scrollbar {
+    border-radius: 2rem;
+    background: #f8f9fa;
 }
 
 .footer {
@@ -385,6 +403,13 @@ a{
     margin-bottom: 7px;
     font-size: 0.99rem;
 }
+
+/*VIEW APPOINTMENT*/
+.card-header{
+    background-color: #00537A;
+}
+
+
 /* 
 .main_container {
     display: flex;

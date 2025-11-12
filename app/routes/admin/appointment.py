@@ -1,18 +1,25 @@
-from flask import Blueprint, render_template, request
+from flask import flash, redirect, url_for, render_template, request
 from . import admin_bp 
 from datetime import datetime
 from models import Appointment, Patient, Doctor , Specialities
+from flask_login import login_required, current_user
+
 
 @admin_bp.route('/appointments', methods = ['GET'])
+@login_required
 def list_appointments():
+    if not hasattr(current_user, 'a_email') or current_user.a_email != "admin@nhshospital.com":
+        flash("You do not have permission to view appointments.", "danger")
+        return redirect(url_for('auth.login'))
+    
     q = request.args.get('q')
-    # Use outer joins so appointments are not dropped when doctor or speciality is missing
+  
     query = Appointment.query.join(Patient).outerjoin(Doctor).outerjoin(Specialities, Doctor.specialty_id == Specialities.id)
 
     
     if q:
         like = f"%{q}%"
-        # use ilike for case-insensitive matching and ensure correct method name
+    
         query = query.filter((
             Patient.p_name.ilike(like) |
             Doctor.doc_name.ilike(like) |

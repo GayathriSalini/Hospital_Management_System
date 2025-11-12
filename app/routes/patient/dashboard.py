@@ -18,10 +18,11 @@ def dashboard():
         today = date.today()
         now = datetime.now().time()
         upcoming_appointments = Appointment.query.filter(
-            Appointment.p_id == patient_id,
-            Appointment.appo_date >= today
+            Appointment.p_id == current_user.p_id,
+            Appointment.status.notin_(["Completed", "Cancelled"]),
+            Appointment.appo_date >= date.today()
         ).order_by(Appointment.appo_date.asc(), Appointment.appo_time.asc()).all()
-        
+    
         
         
         return render_template('patient/dashboard.html',

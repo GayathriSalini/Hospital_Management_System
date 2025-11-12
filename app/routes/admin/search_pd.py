@@ -1,12 +1,20 @@
-from flask import render_template, request
+from flask import render_template, request, flash, url_for, redirect 
 from . import admin_bp
 from models import Patient , db, Doctor, Specialities
+from flask_login import login_required, current_user
 
 
 @admin_bp.route('/admin_search', methods = ['GET'])
+@login_required
 def admin_search():
+    if not hasattr(current_user, 'a_email') or current_user.a_email != "admin@nhshospital.com":
+        
+        return redirect(url_for('auth.login'))
+   
+    
     search_type = request.args.get('search_type', 'patient')
     query = request.args.get('query','')
+    
     
     patients = []
     patient = None
@@ -31,6 +39,7 @@ def admin_search():
            ).all()
            
           
+    
     return render_template(
         'admin/search_pd.html',search_type=search_type, query= query,patient=patient, patients=patients, doctors=doctors
     )

@@ -20,7 +20,7 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(user_id):
-        user = Admin.query.get(int(user_id))
+        user = Admin.query.filter_by(a_email=user_id).first()
         if user:
             return user
         user = Doctor.query.get(int(user_id))

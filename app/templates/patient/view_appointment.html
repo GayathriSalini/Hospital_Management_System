@@ -1,19 +1,20 @@
 {% extends 'layout.html' %}
 {% block body_class %} landing-page {% endblock %}
-{% block title %} Doctor-My Appointments | NHS Hospital {% endblock %}
+{% block title %} My Appointments | NHS Hospital {% endblock %}
 
 {% block navbar %}
 <div class="container nav_bar">
     <div class="d-flex justify-content-between align-items-center mt-2">
         <div><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong> &nbsp; Health Management System</a></div>
-        <div><a href="{{ url_for('doctor.dashboard') }}"><strong>TODAY'S APPOINTMENT </strong> | ← Back to Dashboard </a></div>
+        <div><a href="{{ url_for('patient.dashboard') }}"><strong> APPOINTMENT'S </strong> | ← Back to Dashboard </a></div>
     </div>
 </div>
 {% endblock %}
 
 
 {% block content %}
-<div class="main_container list_appo mx-3 bg-white p-4" style="min-height: calc(100vh - 75px);">
+<div class="main_container  mx-3 bg-white p-4 shadow-sm rounded-4"
+     style="width: 98%; height: 91vh; overflow-y: auto;">
     <div style="width:100%;text-align:center;">
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -34,7 +35,7 @@
      <table class="table table-hover">
      <thead>
      <tr>
-      <th>ID</th>
+      <th>Appo ID</th>
        <th>Time</th>
        <th>Patient Name</th>
        <th>Status</th>
@@ -43,22 +44,19 @@
      </thead>
 
      <tbody>
-     {% for appt in daily_appointments %}
+     {% for appt in appointments %}
      <tr>
-       <td>{{ appt.appo_id}}</td>    
+       <td>{{ appt.appo_id }}</td>    
        <td>{{ appt.appo_date.strftime('%Y-%m-%d') }} {{ appt.appo_time.strftime('%H:%M') }}</td>
-       <td>{{ appt.patient.p_name if appt.patient else 'N/A' }}</td>
+       <td>{{ appt.doctor.doc_name if appt.patient else 'N/A' }}</td>
        <td>{{ appt.status }}</td>
        <td>
           <div class="d-flex gap-2 action-buttons">
-            <button class="btn btn-view" ><a href={{ url_for('doctor.ptreatment_history', patient_id=appt.patient.p_id)}}>View History</a></button>
+  
+            <a href="{{ url_for('patient.treatment_history', patient_id=current_user.p_id) }}"  class="btn btn-add ">View Treatment</a>
             
-            <a href="{{ url_for('doctor.add_treatment', appo_id=appt.appo_id) }}" class="btn btn-add ">Add Treatment</a>
-            <form method="POST" action="{{ url_for('doctor.mark_status', appo_id=appt.appo_id, status='Completed') }}">
-              <button type="submit" class="btn btn-complete">Mark Complete</button>
-            </form>
         
-            <form method="POST" action="{{ url_for('doctor.mark_status', appo_id=appt.appo_id, status='Cancelled') }}"
+            <form method="POST" action="{{ url_for('patient.cancel_appointment', appo_id=appt.appo_id, status='Cancelled') }}"
                   onsubmit="return confirm('Are you sure you want to cancel this appointment?');">
               <button type="submit" class="btn btn-cancel">Cancel</button>
             </form>

@@ -7,11 +7,10 @@
 {% block navbar %}
 <div class="container nav_bar">
   <div class="d-flex justify-content-between align-items-center mt-4">
-      <div>
-        <a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong> &nbsp; Health Management System</a>
-        <div><a href="{{ url_for('admin.doctors_list') }}">ADD PATEINT | ← Back to Dashboard </a></div>
-     </div>
-
+    <div>
+      <a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong> &nbsp; Health Management System</a>
+    </div>
+    <div><a href="{{ url_for('admin.dashboard') }}">ADD PATIENT | ← Back to Dashboard </a></div>
   </div>
 </div>
 {% endblock %}

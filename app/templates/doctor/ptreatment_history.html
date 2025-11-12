@@ -1,0 +1,74 @@
+{% extends 'layout.html' %}
+{% block body_class %}landing-page{% endblock %}
+{% block title %} Treatment-history | NHS Hospital{% endblock %}
+
+{% block navbar %}
+<div class="container nav_bar">
+  <div class="d-flex justify-content-between align-items-center mt-2">
+    <div>
+      <a href="{{ url_for('main.landing_page') }}">
+        <strong>NHS |</strong> Health Management System
+      </a>
+    </div>
+    <div>
+      <a href="{{ url_for('doctor.view_appointment') }}"><strong>PATIENT TREATMENT HISTORY </strong> |&nbsp; &nbsp; ← Book Appointment </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="main_container card shadow-sm border-0 mx-auto  bg-white p-2 shadow-sm rounded-4"
+     style="max-width: 1000px; height: 91vh; overflow-y: auto;">
+  <div style="width:100%;text-align:center;">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show py-2 px-3"
+               role="alert"
+               style="display:inline-block;max-width:400px;min-width:400px;font-size:1rem;">
+            {{ message }}
+            <button type="button" style="padding-top: 0.7rem; padding-right: 1rem;" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
+    
+    <div class="text-end"><h4 ><strong>Patient Name:</strong> {{ treatments_with_day[0][0].appointment.patient.p_name }}</h4></div>
+    
+  
+    <div class="card-body">
+      {% for t, dt_str, day_name in treatments_with_day %}
+        <div class="card mb-4 shadow-sm border-0">
+          <div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color: #00537A;">
+              <h5 class="mb-0"><strong>{{ day_name }}, {{ dt_str }}</strong></h5>
+              <span class="fs-6"><strong>Doctor:</strong> {{ t.appointment.doctor.doc_name if t.appointment and t.appointment.doctor else '—' }}</span>
+          </div>
+
+          <div class="card-body">
+            <div class="mb-3">
+              <label class="form-label"><strong>Diagnosis</strong></label>
+              <div class="form-control bg-white text-dark">{{ t.diagnosis or '—' }}</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label"><strong>Prescription</strong></label>
+              <div class="form-control bg-white text-dark">{{ t.prescription or '—' }}</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label"><strong>Notes</strong></label>
+              <div class="form-control bg-white text-dark">{{ t.notes or '—' }}</div>
+            </div>
+            
+          </div>
+        </div>
+      {% else %}
+        <div class="text-center my-4">
+          <span class="fs-5">No treatments found for this month.</span>
+        </div>
+      {% endfor %}
+    </div>
+ 
+</div>
+{% endblock %}

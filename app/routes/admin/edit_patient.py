@@ -3,9 +3,15 @@ from . import admin_bp
 from datetime import datetime
 from models import Patient, db , Specialities
 from werkzeug.security  import generate_password_hash, check_password_hash
+from flask_login import login_required, current_user
+
 
 @admin_bp.route('/patients/edit/<int:patient_id>', methods=['GET', 'POST'])
+@login_required
 def edit_patient(patient_id):
+    if not hasattr(current_user, 'a_email') or current_user.a_email != "admin@nhshospital.com":
+       
+        return redirect(url_for('auth.login'))
     patient = Patient.query.get_or_404(patient_id)
     
     if request.method == 'POST':

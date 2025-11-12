@@ -63,8 +63,9 @@
                             <td>
                               <div class="d-flex gap-2 action-buttons">
                                 <button class="btn btn-view" onclick="alert('View History Coming Soon')">View History</button>
-                                <button class="btn btn-add" onclick="alert('Add Treatment Coming Soon')">Add Treatment</button>
-                            
+                                <form method="POST" action="{{ url_for('doctor.add_treatment', appo_id=appt.appo_id) }}">
+                                  <button class="btn btn-add">Add Treatment</button>
+                                </form>
                                 <form method="POST" action="{{ url_for('doctor.mark_status', appo_id=appt.appo_id, status='Completed') }}">
                                   <button type="submit" class="btn btn-complete">Mark Complete</button>
                                 </form>
