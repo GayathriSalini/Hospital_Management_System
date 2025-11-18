@@ -1,17 +1,17 @@
 {% extends 'layout.html' %}
-{% block body_class %} landing-page {% endblock %}
+{% block body %} landing-page {% endblock %}
 {% block title %}Patients List | NHS Hospital{% endblock %}
 
 {% block navbar %}
 <div class="container nav_bar">
   <div class="d-flex justify-content-between align-items-center mt-2">
       <div><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong>  &nbsp;   Health Management System</a> </div>
-      <div ><a  href="{{ url_for('admin.dashboard') }}">PATIENT'S LIST | ← Back to Dashboard</a></div>
+      <div ><a  href="{{ url_for('admin.dashboard') }}"><strong>PATIENT'S LIST |</strong>&nbsp; ← Back to Dashboard</a></div>
   </div>  
 </div>
 {% endblock %}
 
-{% block content %}
+{% block body__content %}
 <div class="main_container pd_details mx-3 bg-white p-4" style="min-height: calc(100vh - 75px);">
   <table class="table table-hover">
     <thead>
@@ -33,7 +33,10 @@
         <td>{{ patient.p_dob }}</td>
         <td>{{ patient.p_tel }}</td>
         <td>
-          <button type="button" class="detail_btn btn btn-info"><a href="{{ url_for('admin.edit_patient', patient_id = patient.p_id) }}">Edit</a></button>
+           <button class="detail_btn btn btn-info"><a href="{{ url_for('admin.edit_patient', patient_id = patient.p_id) }}">Edit</a></button>
+          <button class="btn btn-view" ><a href={{ url_for('admin.ptreatment_history', patient_id=patient.p_id)}}>Treatment History</a></button>
+         
+           
         </td>
       </tr>
       {% endfor %}

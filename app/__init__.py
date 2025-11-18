@@ -8,6 +8,8 @@ from werkzeug.security import generate_password_hash
 from flask_migrate import Migrate
 from flask_login import LoginManager
 
+
+
 def create_app():
     app = Flask(__name__,template_folder='templates',static_folder='static')
      
@@ -45,7 +47,7 @@ def create_app():
 
     migrate = Migrate(app, db)
     register_routes(app)
-    
+ 
 
     @event.listens_for(Engine, "connect")
     def set_sqlite_pragma(dbapi_connection, connection_record):

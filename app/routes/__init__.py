@@ -12,6 +12,8 @@ import app.routes.admin.edit_patient
 import app.routes.admin.blacklist_pd
 import app.routes.admin.search_pd
 import app.routes.admin.appointment
+import app.routes.admin.cancel_appoitment
+import app.routes.admin.ptreatment_history
 
 from app.routes.patient import patient_bp
 import app.routes.patient.dashboard

@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const alert = pane.querySelector('.alert-dismissible');
       if (alert) alert.style.display = 'none';
     }
-  });
-
+  }); 
+ 
   
   tabButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -97,3 +97,19 @@ function markLeave(date, scheduleId) {
     form.submit();
   }
 }
+
+function showForm(date, time, schedule_id, title, nop) {
+    document.getElementById('availability-form').style.display = 'block';
+    document.getElementById('schedule_date').value = date;
+    document.getElementById('schedule_time').value = time || '';
+    document.getElementById('schedule_id').value = schedule_id || '';
+    document.getElementById('title').value = title || '';
+    document.getElementById('nop').value = nop || '';
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
+  function hideForm() {
+    document.getElementById('availability-form').style.display = 'none';
+  }
+
+

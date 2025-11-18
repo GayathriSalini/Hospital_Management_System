@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% block body %}landing-page{% endblock %}
-{% block title %} Treatment-history | NHS Hospital{% endblock %}
+{% block title %}Treatment History | NHS Hospital{% endblock %}
 
 {% block navbar %}
 <div class="container nav_bar">
@@ -11,15 +11,19 @@
       </a>
     </div>
     <div>
-      <a href="{{ url_for('patient.appointments') }}"><strong>TREATMENT HISTORY |</strong> |&nbsp; ← Book Appointment </a>
+      <a href="{{ url_for('admin.patients_list') }}">
+        <strong>PATIENT TREATMENT HISTORY |</strong> &nbsp; ← Back to Patient's List
+      </a>
     </div>
   </div>
 </div>
 {% endblock %}
 
+
+
 {% block body__content %}
-<div class="main_container card shadow-sm border-0 mx-auto  bg-white p-4 shadow-sm rounded-4"
-     style="max-width: 1000px; height: 91vh; overflow-y: auto;">
+<div class="main_container  mx-3 bg-white p-4 shadow-sm rounded-4"
+     style="width: 98%; height: 91vh; overflow-y: auto;">
   <div style="width:100%;text-align:center;">
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
@@ -35,13 +39,17 @@
     {% endwith %}
   </div>
 
-  
+  {% if treatments_with_day %}
+    <div class="text-end">
+      <h4><strong>Patient Name:</strong> {{ treatments_with_day[0][0].appointment.patient.p_name }}</h4>
+    </div>
+
     <div class="card-body">
       {% for t, dt_str, day_name in treatments_with_day %}
         <div class="card mb-4 shadow-sm border-0">
           <div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color: #00537A;">
-              <h5 class="mb-0"><strong>{{ day_name }}, {{ dt_str }}</strong></h5>
-              <span class="fs-6"><strong>Doctor:</strong> {{ t.appointment.doctor.doc_name if t.appointment and t.appointment.doctor else '—' }}</span>
+            <h5 class="mb-0"><strong>{{ day_name }}, {{ dt_str }}</strong></h5>
+            <span class="fs-6"><strong>Doctor:</strong> {{ t.appointment.doctor.doc_name if t.appointment and t.appointment.doctor else '—' }}</span>
           </div>
 
           <div class="card-body">
@@ -57,15 +65,14 @@
               <label class="form-label"><strong>Notes</strong></label>
               <div class="form-control bg-white text-dark">{{ t.notes or '—' }}</div>
             </div>
-            
           </div>
-        </div>
-      {% else %}
-        <div class="text-center my-4">
-          <span class="fs-5">No treatments found for this month.</span>
         </div>
       {% endfor %}
     </div>
- 
+  {% else %}
+    <div class="text-center my-4">
+      <span class="fs-5">No treatment history found for this month.</span>
+    </div>
+  {% endif %}
 </div>
 {% endblock %}

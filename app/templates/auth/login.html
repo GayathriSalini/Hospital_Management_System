@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% block body_class %}landing-page{% endblock %}
+{% block body %}landing-page{% endblock %}
 {% block title %}Login | NHS Hospital{% endblock %}
 
 {% block navbar %}
@@ -14,7 +14,7 @@
 
 
 
-{% block content %}
+{% block body__content %}
 {% set active_tab = request.args.get('active_tab') or 'patient' %}
 <div class="main_container d-flex flex-column align-items-center justify-content-center" style="min-height: 80vh;">
   <div style="max-width: 650px; width: 100%;">

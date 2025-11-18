@@ -8,5 +8,8 @@ from flask_login import login_required, current_user
 @login_required
 def appointments():
     patient_id = current_user.p_id 
-    appointments = Appointment.query.filter_by(p_id=patient_id).all()
+    appointments = Appointment.query.filter_by(p_id=patient_id).order_by(
+        Appointment.appo_date.desc(),
+        Appointment.appo_time.desc()
+    ).all()
     return render_template('patient/view_appointment.html', appointments=appointments, patient_id=patient_id)

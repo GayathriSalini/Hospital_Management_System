@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% block body_class %}landing-page{% endblock %}
+{% block body %}landing-page{% endblock %}
 {% block title %}Patient Search | NHS Hospital{% endblock %}
 
 
@@ -13,14 +13,14 @@
       </a>
     </div>
     <div>
-      <a href="{{ url_for('doctor.dashboard') }}"><strong> SEARCH  </strong> &nbsp; &nbsp; ← Back to Dashboard</a>
+      <a href="{{ url_for('doctor.dashboard') }}"><strong> SEARCH PATIENT |</strong> &nbsp; ← Back to Dashboard</a>
     </div>
   </div>
 </div>
 {% endblock %}
 
 
-{% block content %}
+{% block body__content %}
 <div class="main_container d-flex flex-column align-items-center my-5" style="min-height: 70vh;">
  
 

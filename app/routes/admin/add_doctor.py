@@ -10,8 +10,8 @@ def add_doctor():
     if getattr(current_user, 'a_email', None) != 'admin@nhshospital.com':
         return redirect(url_for('auth.login'))
     
-    specialties = Specialities.query.all()
     
+    specialties = Specialities.query.all()
     
     if request.method == 'POST':
         doc_name = request.form.get('doc_name')

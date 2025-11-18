@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for, flash, request, redirect
+from flask import Blueprint,session, render_template, url_for, flash, request, redirect
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, Patient, Doctor, Admin
@@ -103,4 +103,5 @@ def register():
 @login_required
 def logout():
     logout_user()
+    session.clear()
     return redirect(url_for('auth.login'))

@@ -1,11 +1,14 @@
 {% extends 'layout.html' %}
-{% block body_class %} landing-page {% endblock %}
+{% block body %} landing-page {% endblock %}
 {% block title %} Doctor-Dashboard | NHS Hospital {% endblock %}
 
-{% block content %}
-<div class="main_container dashboard mt-3 mx-2 bg-white" style="width=90%; height:96vh; border-radius:2rem;">
+
+{% block body__content %}
+<div class="main_container dashboard mt-3 mx-2 bg-white" style="width: 99%; height: 96vh; border-radius: 2rem; overflow-y: auto;">
     <div class="sidebar">
-        <div class="logo"><h4><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong>&nbsp;&nbsp; Health Management System</a></h4></div>
+        <div class="logo">
+            <h4><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong>&nbsp; Health Management System</a></h4>
+        </div>
         <ul class="menu">
             <li><a href="{{ url_for('doctor.dashboard') }}">Dashboard</a></li>
             <li><a href="{{ url_for('doctor.availability') }}">Update Availability</a></li>
@@ -19,29 +22,43 @@
             <h2>Hi, Dr. {{ doctor.doc_name }}</h2>
             <div class="admin-info">
                 <img src="{{ url_for('static', filename='images/doc_photo.png')}}" alt="doctor_Profile">
-                <span>{{doctor.doc_email}}</span>
+                <span>{{ doctor.doc_email }}</span>
             </div>
         </div>
-        <p style="color:#333; font-weight: 600;">
-          Department: {{ specialty.s_name if specialty else 'N/A' }}
+        <p style="color:#333; font-weight:600;">
+            Department: {{ specialty.s_name if specialty else 'N/A' }}
         </p>
 
-        <div class="stats-cards">
-            <div class="card">
-                <h2>{{ daily_appointments|length }}</h2>
-                <p>Today's Appointments</p>
-            </div>
-            <div class="card">
-                <h2>{{ total_patients|length }}</h2>
-                <p>Total Patients</p>
-            </div>
+ 
+        <div style="display: flex; gap: 2rem; align-items: flex-start; margin-bottom: 2rem;">
+  
+    <div style="display: flex; flex-direction: column; gap: 14px; min-width: 340px;">
+        <div class="panel card" style="width: 100%; height: 70px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <h2 style="margin:0;">{{ daily_appointments|length }}</h2>
+            <h3 style="margin:0;">Today's Appointments</h3>
         </div>
-        <div class="task_btns">
-            <button class="task_btn btn "><a href="{{ url_for('doctor.availability') }}">Update Availability</a></button>
-            <button class="task_btn" onclick="alert('View All Appointments Coming Soon')">View All Appointments</button>
-            <button type="submit" class="btn task_btn btn-search"><a href="{{ url_for('doctor.search_patient') }}">Search</a></button>
+        <div class=" panel card" style="width: 100%; height: 70px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <h2 style="margin:0;">{{ total_patients|length }}</h2>
+            <h3 style="margin:0;">Total Patients<h3>
         </div>
-        
+        <div style="display: flex; gap: 10px; margin-top: 10px; justify-content: center;">
+            <button class="task_btn btn" onclick="location.href='{{ url_for('doctor.availability') }}'">Update Availability</button>
+            <button class="task_btn btn" onclick="location.href='{{ url_for('doctor.view_appointment') }}'">View All Appointments</button>
+            <button class="task_btn btn" onclick="location.href='{{ url_for('doctor.search_patient') }}'">Search</button>
+        </div>
+    </div>
+    <div class="panel border" style="min-width:320px; flex:1; height:300px; background:#fff; border-radius:14px; box-shadow:0 0 8px #0001; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:20px 20px 8px 20px;">
+        <h3 style="margin-bottom: 8px; margin-top: 4px;">Weekly Appointment Status</h3>
+        <div>
+        <canvas id="doctorPieChart"
+            width="250" height="90"
+            data-data="{{ [status_counts.get('Booked', 0), status_counts.get('Completed', 0), status_counts.get('Cancelled', 0)] | join(',') }}">
+        </canvas>
+    </div>
+       
+    </div>
+</div>
+
         <div class="panel">
             <h3>Today's Appointments</h3>
             <div class="table-responsive">
@@ -61,22 +78,19 @@
                             <td>{{ appt.patient.p_name if appt.patient else 'N/A' }}</td>
                             <td>{{ appt.status }}</td>
                             <td>
-                              <div class="d-flex gap-2 action-buttons">
-                                <button class="btn btn-view" onclick="alert('View History Coming Soon')">View History</button>
-                                <form method="POST" action="{{ url_for('doctor.add_treatment', appo_id=appt.appo_id) }}">
-                                  <button class="btn btn-add">Add Treatment</button>
-                                </form>
-                                <form method="POST" action="{{ url_for('doctor.mark_status', appo_id=appt.appo_id, status='Completed') }}">
-                                  <button type="submit" class="btn btn-complete">Mark Complete</button>
-                                </form>
-                            
-                                <form method="POST" action="{{ url_for('doctor.mark_status', appo_id=appt.appo_id, status='Cancelled') }}"
-                                      onsubmit="return confirm('Are you sure you want to cancel this appointment?');">
-                                  <button type="submit" class="btn btn-cancel">Cancel</button>
-                                </form>
-                              </div>
+                                <div class="d-flex gap-2 action-buttons">
+                                    <button class="btn btn-view" onclick="alert('View History Coming Soon')">View History</button>
+                                    <form method="POST" action="{{ url_for('doctor.add_treatment', appo_id=appt.appo_id) }}">
+                                        <button class="btn btn-add">Add Treatment</button>
+                                    </form>
+                                    <form method="POST" action="{{ url_for('doctor.mark_status', appo_id=appt.appo_id, status='Completed') }}">
+                                        <button type="submit" class="btn btn-complete">Mark Complete</button>
+                                    </form>
+                                    <form method="POST" action="{{ url_for('doctor.mark_status', appo_id=appt.appo_id, status='Cancelled') }}" onsubmit="return confirm('Are you sure you want to cancel this appointment?');">
+                                        <button type="submit" class="btn btn-cancel">Cancel</button>
+                                    </form>
+                                </div>
                             </td>
-
                         </tr>
                     {% else %}
                         <tr><td colspan="4" class="text-center">No appointments today.</td></tr>
@@ -87,4 +101,8 @@
         </div>
     </div>
 </div>
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/doctor_piechart.js')}}"></script>
+{% endblock %}
 {% endblock %}

@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% block body_class %}landing-page{% endblock %}
+{% block body %}landing-page{% endblock %}
 {% block title %}Search - Doctor | NHS Hospital{% endblock %}
 
 {% block navbar %}
@@ -11,13 +11,13 @@
       </a>
     </div>
     <div>
-      <a href="{{ url_for('patient.book_appointment') }}"><strong> SEARCH </strong>| &nbsp; &nbsp; ← Book Appointment </a>
+      <a href="{{ url_for('patient.book_appointment') }}"><strong> SEARCH DOCTOR |</strong> &nbsp; ← Book Appointment </a>
     </div>
   </div>
 </div>
 {% endblock %}
 
-{% block content %}
+{% block body__content %}
 <div class="main_container d-flex flex-column align-items-center my-5" style="min-height:70vh; max-width:900px; margin:auto;">
   <form method="GET" action="{{ url_for('patient.search_doctor') }}" class="mb-4 w-100 d-flex gap-2 align-items-center">
     <select name="search_by" class="form-select" style="width:150px; height:3rem;" onchange="this.form.submit()" >

@@ -1,26 +1,26 @@
 {% extends 'layout.html' %}
 
-{% block body_class %}landing-page{% endblock %}
+{% block body %}landing-page{% endblock %}
 
 {% block navbar %}
-<div class="container nav_bar">
+<div class="nav_bar container">
   <div class="d-flex justify-content-between align-items-center mt-4">
-      <div><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong>  &nbsp;   Health Management System</a> </div>
-      <div ><a  href="{{ url_for('auth.register') }}">REGISTER HERE</a></div>
+      <div class="hosp_name"><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong>  &nbsp;   Health Management System</a> </div>
+      <div ><a  href="{{ url_for('auth.register') }}"><strong>REGISTER HERE</strong></a></div>
   </div>  
 </div>
 {% endblock %}
 
-{% block content %}
+{% block body__content %}
 <div class="main_container d-flex flex-column justify-content-center align-items-center" style="height: 80vh;">
-    <h1 class="landing_h2">Welcome to NHS Hospital Management System</h1>
-    <h4 class="landing_p mt-2">Streamline patient records, doctor appointments, and hospital workflows all in one place.</h4>
+    <h1 class="loginpage_h1">Welcome to NHS Hospital Management System</h1>
+    <h4 class="loginpage_h4 mt-2">Streamline patient records, doctor appointments, and hospital workflows all in one place.</h4>
     <a href="{{ url_for('auth.login') }}" class="btn btn-primary landing_btn mt-2" style="width: 20%;">LOGIN</a>
 </div>
 {% endblock %}
 
 {% block footer %}
         <footer class=" py-3 text-center mt-auto ">
-             <small class="text-muted  landing_footer">&copy; 2025 | NHS Hospital Management System</small>
+             <small class="text-muted landing_footer">&copy; 2025 | NHS Hospital Management System</small>
         </footer>
 {% endblock %}

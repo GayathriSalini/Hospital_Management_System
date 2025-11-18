@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% block body_class %}landing-page{% endblock %}
+{% block body %}landing-page{% endblock %}
 {% block title %} Treatment-history | NHS Hospital{% endblock %}
 
 {% block navbar %}
@@ -11,13 +11,13 @@
       </a>
     </div>
     <div>
-      <a href="{{ url_for('doctor.view_appointment') }}"><strong>PATIENT TREATMENT HISTORY </strong> |&nbsp; &nbsp; ← Book Appointment </a>
+      <a href="{{ url_for('doctor.view_appointment') }}"><strong>PATIENT TREATMENT HISTORY |</strong> &nbsp; ← Book Appointment </a>
     </div>
   </div>
 </div>
 {% endblock %}
 
-{% block content %}
+{% block body__content %}
 <div class="main_container card shadow-sm border-0 mx-auto  bg-white p-2 shadow-sm rounded-4"
      style="max-width: 1000px; height: 91vh; overflow-y: auto;">
   <div style="width:100%;text-align:center;">

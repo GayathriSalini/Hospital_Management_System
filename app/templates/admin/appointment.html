@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% block body_class %} landing-page {% endblock %}
+{% block body %} landing-page {% endblock %}
 
 {% block title %} Appointment List | NHS Hospital {% endblock %}
 
@@ -7,13 +7,14 @@
 <div class="container nav_bar">
     <div class="d-flex justify-content-between align-items-center mt-2">
         <div><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong> &nbsp; Health Management System</a></div>
-        <div><a href="{{ url_for('admin.dashboard') }}">APPOINTMENT'S LIST | ← Back to Dashboard </a></div>
+        <div><a href="{{ url_for('admin.dashboard') }}"><strong>APPOINTMENT'S LIST | </strong> &nbsp;  ← Back to Dashboard </a></div>
     </div>
 </div>
 {% endblock %}
-{% block content %}
-<div class="main_container list_appo mx-3 bg-white p-4" style="min-height: calc(100vh - 75px);">
-      <table class="table table-hover">
+{% block body__content %}
+<div class="main_container  mx-3 bg-white p-4 shadow-sm rounded-4"
+     style="width: 98%; height: 91vh; overflow-y: auto;">      
+     <table class="table table-hover">
         <thead>
          <tr>
            <th>ID</th>
@@ -38,7 +39,11 @@
             <td>{{ appointment.status }}</td>
             <td>
              
-              <button type="button" class="btn btn-danger btn-xs delete" id="{{ appointment.id }}">Delete</button>
+                <form action="{{ url_for('admin.cancel_appointment', appo_id=appointment.appo_id) }}" method="POST" style="display:inline;">
+                  <button type="submit" class="btn text-white btn-cancel btn-xs" onclick="return confirm('Are you sure you want to cancel this appointment?');">
+                    Cancel
+                  </button>
+                </form>
             </td>
           </tr>
           {% endfor %}

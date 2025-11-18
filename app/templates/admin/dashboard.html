@@ -1,12 +1,11 @@
 {% extends 'layout.html' %}
-{% block body_class %} landing-page {% endblock %}
+{% block body %} landing-page {% endblock %}
 {% block title %} Admin-Dashboard | NHS Hospital {% endblock %}
 
-
-{% block content %}
-<div class="main_container dashboard mt-3 mx-2 bg-white" style="width=90%; height:88vh; border-radius:8px;">
-<div class="sidebar">
-    <div class="logo " ><h4><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong>  &nbsp;   Health Management System</a></h4> </div>
+{% block body__content %}
+<div class="main_container dashboard mt-3 mx-2 bg-white" style="width=90%; height:96vh; border-radius:2rem; overflow-y: auto;">
+  <div class="sidebar">
+    <div class="logo"><h4><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong>Health Management System</a></h4></div>
     <ul class="menu">
       <li><a href="#">Dashboard</a></li>
       <li><a href="{{ url_for('admin.add_doctor') }}">Add Doctor</a></li>
@@ -17,7 +16,6 @@
       <li><a href="{{ url_for('admin.blacklist_search') }}">BlackList</a></li>
       <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
     </ul>
-    
   </div>
   <div class="main">
     <div class="header">
@@ -27,7 +25,7 @@
         <span>admin@nhshospital.com</span>
       </div>
     </div>
-    <div class="stats-cards">
+    <div class="stats-cards" style="display: flex; justify-content: space-around; margin-bottom: 1.5rem;">
       <div class="card">
         <h2>{{ total_doctors }}</h2>
         <p>Doctors</p>
@@ -41,25 +39,53 @@
         <p>Appointments</p>
       </div>
     </div>
-    <div class="task_btns">
+    <div class="task_btns" style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
       <button class="task_btn"><a style="color:white" href="{{ url_for('admin.add_doctor') }}">Add Doctor</a></button>
       <button class="task_btn"><a style="color:white" href="{{ url_for('admin.add_patient') }}">Add Patient</a></button>
-      <button class="task_btn">View Appointments</button>
-      <button class="task_btn"><a style="color:white" href='{{ url_for('admin.admin_search') }}'>Search</a></button>
+      <button class="task_btn"><a style="color:white" href="{{ url_for('admin.list_appointments') }}">View Appointments</a></button>
+      <button class="task_btn"><a style="color:white" href="{{ url_for('admin.admin_search') }}">Search</a></button>
     </div>
-    <div class="panel">
-      <h3>Quick Notification</h3>
-      <p>Emily just sent you a task for tomorrow’s appointment schedules.</p>
-      <button class="task_btn">View Now</button>
-    </div>
-    <div class="panel">
-      <h3>Today’s Tasks</h3>
-      <ul>
-        <li>Approve new doctor registrations</li>
-        <li>Review appointment cancellations</li>
-        <li>Update patient profiles</li>
-      </ul>
+ 
+
+    <div style="display: flex; gap: 2rem; justify-content: center; align-items: stretch; margin-top: 2rem;">
+ 
+      <div class="panel border"
+          style="background: #fff; border-radius: 10px; box-shadow:0 0 10px #0001; padding: 1.5rem; min-width:300px; flex: 1 1 0;">
+        <h3>Quick Notification</h3>
+        <p>Emily just sent you a task for tomorrow's appointment schedules.</p>
+        <button class="task_btn btn btn-primary">View Now</button>
+      </div>
+   
+
+      <div class="panel border"
+          style="background: #fff; border-radius: 10px; box-shadow:0 0 10px #0001; padding: 1.5rem; display:flex; justify-content:center; align-items:center; min-width:300px; flex: 1 1 0;">
+          
+          <div style="width: 320px; height: 320px;">
+            
+          <canvas id="adminPieChart"
+            data-total-doctors="{{ total_doctors }}"
+            data-total-patients="{{ total_patients }}"
+            data-total-appointments="{{ total_appointments }}">
+          </canvas>
+        </div>
+      </div>
+   
+
+      <div class="panel border"
+          style="background: #fff; border-radius: 10px; box-shadow:0 0 10px #0001; padding: 1.5rem; min-width:300px; flex: 1 1 0;">
+        <h3>Today's Tasks</h3>
+        <ul>
+          <li>Approve new doctor registrations</li>
+          <li>Review appointment cancellations</li>
+          <li>Update patient profiles</li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/admin_piechart.js') }}"></script>
+{% endblock %}
+
 {% endblock %}

@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block body_class %} landing-page {% endblock %}
+{% block body %} landing-page {% endblock %}
 
 {% block title %} ADD - DOC | NHS Hospital {% endblock %}
 
@@ -10,12 +10,12 @@
     <div>
       <a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong> &nbsp; Health Management System</a>
     </div>
-    <div><a href="{{ url_for('admin.dashboard') }}">ADD DOCTOR | ← Back to Dashboard </a></div>
+    <div><a href="{{ url_for('admin.dashboard') }}"><strong>ADD DOCTOR |</strong> &nbsp; ← Back to Dashboard </a></div>
   </div>
 </div>
 {% endblock %}
 
-{% block content %}
+{% block body__content %}
 <div 
   class="main_container register_form d-flex justify-content-center align-items-start"
   style="min-height:40vh;"
@@ -55,7 +55,7 @@
       </div>
       <div class="mb-2">
         <label for="doc_tel" class="form-label">Phone Number:</label>
-        <input type="text" class="form-control" id="doc_tel" name="doc_tel">
+        <input type="text" maxlength="10" class="form-control" id="doc_tel" name="doc_tel">
       </div>
       <div class="mb-3">
         <label for="specialty_id" class="form-label">Specialty</label>

@@ -1,9 +1,9 @@
 {% extends 'layout.html' %}
-{% block body_class %} landing-page {% endblock %}
+{% block body %} landing-page {% endblock %}
 {% block title %} Patient-Dashboard | NHS Hospital {% endblock %}
 
-{% block content %}
-<div class="main_container dashboard mt-3 mx-2 bg-white" style="width: 99%; height: 96vh; border-radius: 2rem;">
+{% block body__content %}
+<div class="main_container dashboard mt-3 mx-2 bg-white" style="width: 99%; height: 96vh; border-radius: 2rem; overflow-y: auto;">
     <div class="sidebar">
         <div class="logo"><h4><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong>&nbsp;&nbsp; Health Management System</a></h4></div>
         <ul class="menu">
@@ -25,7 +25,7 @@
 
         <div style="display: flex; gap: 32px; margin-bottom: 32px;">
         
-            <div class="profile-card">
+            <div class="panel profile-card">
                 <div class="profile-card-header">
                     <h5>Patient Information</h5>
                     <a href="{{ url_for('patient.edit_data', patient_id=patient.p_id )}}" class="edit-btn">Edit</a>
@@ -41,9 +41,9 @@
             </div>
 
             
-            <div class="profile-card">
+            <div class="panel profile-card">
                 <div class="profile-card-header" >
-                    <h5>Fill Medical Information</h5>
+                    <h3>Fill Medical Information</h3>
                     <a href="{{ url_for('patient.add_edit_medical', medical_details=medical_details)}}" class="edit-btn">Edit</a>
                 </div>
                 <div class="profile-card-body">
@@ -55,6 +55,20 @@
                     <div><strong>Chronic Conditions:</strong> {{ details.chronic_conditions or 'None' }}</div>
                 </div>
             </div>
+
+            <div class="panel profile-card">
+                <div class="profile-card-header" >
+                    <h3 style="margin-bottom: 12px; margin-top: 0;">Treatment History Overview (Monthly)</h3>
+                </div>
+                <div class="profile-card-body">
+                    <canvas id="patientLineChart"
+                        data-labels="{{ treatment_months|join(',') }}"
+                        data-values="{{ treatment_counts|join(',') }}">
+                      </canvas>
+
+                </div>
+            </div>
+
         </div>
 
         <div class="appointments-section panel">
@@ -80,16 +94,15 @@
                                     <div style="display: inline-flex; gap: 5px;">
                                       <form method="POST" action="{{ url_for('patient.cancel_appointment', appo_id=appt.appo_id) }}"
                                             onsubmit="return confirm('Are you sure you want to cancel this appointment?');">
-                                        <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                                        <button type="submit" class="btn btn-cancel text-white btn-sm ">Cancel</button>
                                       </form>
                                       
                                       <form method="POST" action="{{ url_for('patient.reschedule_appointment', appo_id=appt.appo_id) }}">
-                                        <button type="submit" class="btn btn-warning btn-sm">Reschedule</button>
+                                        <button type="submit" class="btn btn-info text-white btn-sm">Reschedule</button>
                                       </form>
                                     </div>
                                   </td>
-                                  
-                                  
+          
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -101,4 +114,9 @@
         </div>
     </div>
 </div>
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/patient_chart.js') }}"></script>
+{% endblock %}
+
 {% endblock %}

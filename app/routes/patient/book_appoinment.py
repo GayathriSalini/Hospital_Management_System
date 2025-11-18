@@ -1,9 +1,16 @@
 from flask import request, session, redirect, url_for, flash, render_template
 from models import Patient, Doctor, Appointment, DocSchedule, db
-from datetime import datetime
+from datetime import datetime, time, timedelta
 from . import patient_bp
 from flask_login import login_required, current_user
 
+
+def get_shift_end_time(schedule_date, schedule_time):
+    default_start = time(9, 0)
+    start_time = schedule_time or default_start
+    start_dt = datetime.combine(schedule_date, start_time)
+    end_dt = start_dt + timedelta(hours=8)
+    return end_dt.time()
 
 
 @patient_bp.route('/book_appointment', methods=['GET', 'POST'])
@@ -18,37 +25,77 @@ def book_appointment():
         time_str = request.form.get('appointment_time')
 
         if not (doctor_id and date_str and time_str):
-            flash('All fields are required', 'error')
+            flash('All detail Required', 'danger')
             return redirect(url_for('patient.book_appointment'))
 
-        appointment_date = datetime.strptime(date_str, '%Y-%m-%d').date()
-        appointment_time = datetime.strptime(time_str, '%H:%M').time()
+        try:
+            appointment_date = datetime.strptime(date_str, '%Y-%m-%d').date()
+            appointment_time = datetime.strptime(time_str, '%H:%M').time()
+        except ValueError:
+            return redirect(url_for('patient.book_appointment'))
 
-        
+    
         leave_schedule = DocSchedule.query.filter_by(
             doc_id=doctor_id,
             schedule_date=appointment_date,
             title="On Leave"
         ).first()
         if leave_schedule:
-            flash('Doctor is on leave for the selected date. Please choose another date.', 'danger')
+            flash('Doctor is on leave  on the selected date.', 'danger')
             return redirect(url_for('patient.book_appointment'))
 
-        schedule = DocSchedule.query.filter_by(
+     
+     
+        schedules = DocSchedule.query.filter_by(
             doc_id=doctor_id,
-            schedule_date=appointment_date,
-            schedule_time=appointment_time
-        ).first()
+            schedule_date=appointment_date
+        ).all()
 
-        DEFAULT_CAPACITY = 10
-        if schedule:
-            if hasattr(schedule, 'status') and schedule.status == 'on leave':
-                flash('Doctor is on leave at this time. Please select another slot.', 'danger')
+       
+        default_start_time = time(9, 0)
+        default_end_time = (datetime.combine(appointment_date, default_start_time) + timedelta(hours=8)).time()
+
+       
+        within_shift = False
+
+        for schedule in schedules:
+     
+            if schedule.title == "On Leave":
+                continue
+
+            start_time = schedule.schedule_time or default_start_time
+            end_time = get_shift_end_time(appointment_date, start_time)
+
+           
+            if start_time <= appointment_time < end_time:
+                within_shift = True
+                matching_schedule = schedule
+                break
+
+        if not schedules:
+           
+            if not (default_start_time <= appointment_time < default_end_time):
+                flash('Booked time is outside the doctors working hours ', 'danger')
                 return redirect(url_for('patient.book_appointment'))
-            if schedule.nop is not None and schedule.nop <= 0:
-                flash('Slot is not available - select another slot.', 'danger')
+          
+          
+            matching_schedule = None
+            within_shift = True
+
+        if not within_shift:
+            flash('Booked appointment time is outside the doctors available shift hours.', 'danger')
+            return redirect(url_for('patient.book_appointment'))
+
+    
+        DEFAULT_CAPACITY = 20
+
+        if matching_schedule:
+            if matching_schedule.nop is not None and matching_schedule.nop <= 0:
+                flash('Slot is not available, select another slot.', 'danger')
                 return redirect(url_for('patient.book_appointment'))
         else:
+        
+            
             booked_count = Appointment.query.filter_by(
                 doc_id=doctor_id,
                 appo_date=appointment_date,
@@ -56,9 +103,28 @@ def book_appointment():
             ).count()
 
             if booked_count >= DEFAULT_CAPACITY:
-                flash('Slot is full, please choose another time.', 'danger')
+                flash('Slot is full, please choose another date.', 'danger')
                 return redirect(url_for('patient.book_appointment'))
 
+       
+        time_appointment = timedelta(minutes=3)
+        request_time = datetime.combine(appointment_date,appointment_time)
+        
+        doc_appointments= Appointment.query.filter_by(
+            doc_id=doctor_id,
+            appo_date=appointment_date,
+            status="Booked"
+        ).all()
+       
+        for appt in doc_appointments:
+            existing_time = datetime .combine(appt.appo_date, appt.appo_time)
+            if abs((request_time - existing_time).total_seconds())< time_appointment.total_seconds():
+                flash("Book in another this slot is already booked","danger")
+                return redirect(url_for('patient.book_appointment'))
+       
+       
+       
+       
         existing = Appointment.query.filter_by(
             p_id=patient_id,
             doc_id=doctor_id,
@@ -67,9 +133,9 @@ def book_appointment():
         ).first()
 
         if existing:
-            flash('You already have an appointment at this time.', 'error')
+            flash('You already have an appointment at this time.', 'danger')
             return redirect(url_for('patient.book_appointment'))
-
+        
         new_appt = Appointment(
             p_id=patient_id,
             doc_id=doctor_id,
@@ -77,11 +143,10 @@ def book_appointment():
             appo_time=appointment_time,
             status='Booked'
         )
-
         db.session.add(new_appt)
-
-        if schedule and schedule.nop is not None:
-            schedule.nop -= 1
+ 
+        if matching_schedule and matching_schedule.nop is not None:
+            matching_schedule.nop -= 1
 
         db.session.commit()
 

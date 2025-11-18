@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% block body_class %} landing-page {% endblock %}
+{% block body %} landing-page {% endblock %}
 
 {% block title %}Edit - Patient | NHS Hospital{% endblock %}
 
@@ -7,12 +7,12 @@
 <div class="container nav_bar">
     <div class="d-flex justify-content-between align-items-center mt-2">
         <div><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong> &nbsp; Health Management System</a></div>
-        <div><a href="">EDIT PATIENT DATA</a></div>
+        <div> <a href="{{ url_for('admin.dashboard') }}"><strong> EDIT PATIENT DATA |</strong> &nbsp; ← Back to Dashboard  </a>
     </div>
 </div>
 {% endblock %}
 
-{% block content %}
+{% block body__content %}
 <div class="main_container register_form d-flex justify-content-center align-items-start" style="min-height:40vh;">
     <div class="container" style="max-width: 500px;">
     <form method="POST" autocomplete="off" action="{{ url_for('admin.edit_patient', patient_id=patient.p_id) }}" class="p-4 bg-light rounded shadow">
@@ -61,8 +61,5 @@
     </form>
   </div>
 </div>
-
-
-
 
 {% endblock %}

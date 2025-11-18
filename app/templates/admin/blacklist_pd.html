@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% block body_class %}landing-page{% endblock %}
+{% block body %}landing-page{% endblock %}
 {% block title %}Admin BlackList | NHS Hospital{% endblock %}
 {% block navbar %}
 <div class="container nav_bar">
@@ -8,14 +8,14 @@
       <a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong> Health Management System</a>
     </div>
     <div>
-      <a href="{{ url_for('admin.dashboard') }}"><strong> BLACKLIST</strong> &nbsp; &nbsp; | ← Back to Dashboard </a>
+      <a href="{{ url_for('admin.dashboard') }}"><strong>BLACKLIST |</strong> &nbsp; ← Back to Dashboard </a>
     </div>
   </div>
 </div>
 {% endblock %}
 
 
-{% block content %}
+{% block body__content %}
 <div class="main_container d-flex flex-column align-items-center my-5" style="min-height: 70vh;">
   <form method="GET" action="{{ url_for('admin.blacklist_search') }}" class="mb-4 w-100" style="max-width: 600px;">
     <div class="row g-2 align-items-center">

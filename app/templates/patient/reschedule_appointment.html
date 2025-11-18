@@ -1,17 +1,17 @@
 {% extends 'layout.html' %}
-{% block body_class %} landing-page {% endblock %}
+{% block body %} landing-page {% endblock %}
 {% block title %}Reschedule Appointment{% endblock %}
 
 {% block navbar %}
 <div class="container nav_bar">
     <div class="d-flex justify-content-between align-items-center mt-2">
         <div><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong> &nbsp; Health Management System</a></div>
-        <div><a href="{{ url_for('patient.dashboard') }}"><strong>RESCHEDULE PATIENT</strong> &nbsp; ← Back to Dashboard</a></div>
+        <div><a href="{{ url_for('patient.dashboard') }}"><strong>RESCHEDULE PATIENT</strong> &nbsp; | ← Back to Dashboard</a></div>
     </div>
 </div>
 {% endblock %}
 
-{% block content %}
+{% block body__content %}
 <div class="main_container register_form d-flex justify-content-center align-items-start" style="min-height:40vh; margin-top:2rem;">
   <div class="container" style="max-width:500px;">
 

@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% block body_class %}landing-page{% endblock %}
+{% block body %}landing-page{% endblock %}
 {% block title %}Search - Patient/Doctor | NHS Hospital{% endblock %}
 
 {% block navbar %}
@@ -11,30 +11,64 @@
       </a>
     </div>
     <div>
-      <a href="{{ url_for('admin.admin_search') }}"><strong> SEARCH </strong> &nbsp; &nbsp;  PATIENT - DOCTOR</a>
+      <a href="{{ url_for('admin.dashboard') }}"><strong> SEARCH - PATIENT/DOCTOR |</strong> &nbsp; ← Back to Dashboard  </a>
     </div>
   </div>
 </div>
 {% endblock %}
 
-{% block content %}
+{% block body__content %}
 <div class="main_container d-flex flex-column align-items-center my-5" style="min-height: 70vh;">
-  <form method="GET" action="{{ url_for('admin.admin_search') }}" class="mb-4 w-100" style="max-width: 600px;">
+  <form method="GET" action="{{ url_for('admin.admin_search') }}" class="mb-4 w-100" style="max-width: 700px;">
     <div class="row g-2 align-items-center">
+
+
+      
       <div class="col-auto">
-        <select name="search_type" id="search_type" class="form-select" style="height:3rem;">
+        <select name="search_type" id="search_type" class="form-select" style="height:3rem;" onchange="this.form.submit()">
           <option value="patient" {% if search_type == 'patient' %}selected{% endif %}>Patient</option>
           <option value="doctor" {% if search_type == 'doctor' %}selected{% endif %}>Doctor</option>
         </select>
       </div>
-      <div class="col">
-        <input type="text" name="query" id="query_input" class="form-control" required placeholder="Search here" value="{{ query }}" style="height:3rem;">
+
+   
+      {% if search_type == 'doctor' %}
+      <div class="col-auto">
+        <select name="doctor_search_by" id="doctor_search_by" class="form-select" style="height:3rem;" onchange="document.getElementById('query_input').value=''; this.form.submit();">
+          <option value="name" {% if doctor_search_by == 'name' %}selected{% endif %}>Name</option>
+          <option value="id" {% if doctor_search_by == 'id' %}selected{% endif %}>ID</option>
+          <option value="specialty" {% if doctor_search_by == 'specialty' %}selected{% endif %}>Specialty</option>
+        </select>
       </div>
+      {% endif %}
+
+      
+      <div class="col">
+        {% if search_type == 'doctor' %}
+          {% if doctor_search_by == 'specialty' %}
+            <select name="query" id="query_input" class="form-select" style="height:3rem;" required>
+              <option value="">Select Specialty</option>
+              {% for speciality in specialties_list %}
+                <option value="{{ speciality.id }}" {% if query|int == speciality.id %}selected{% endif %}>
+                  {{ speciality.s_name }}
+                </option>
+              {% endfor %}
+            </select>
+          {% else %}
+            <input type="text" name="query" id="query_input" class="form-control" required placeholder="Enter doctor {{ doctor_search_by }}" value="{{ query }}" style="height:3rem;">
+          {% endif %}
+        {% else %}
+          <input type="text" name="query" id="query_input" class="form-control" required placeholder="Search patient by name, id or contact" value="{{ query }}" style="height:3rem;">
+        {% endif %}
+      </div>
+
       <div class="col-auto">
         <button type="submit" class="btn btn-primary px-4" style="height:3rem;">Search</button>
       </div>
     </div>
   </form>
+
+ 
 
   {% if search_type == 'patient' %}
     {% if patients %}
@@ -57,19 +91,19 @@
                 <td>{{ p.p_name }}</td>   
                 <td>{{ p.p_email }}</td>
                 <td>{{ p.p_tel }}</td>
-                <td></td>
               </tr>
               {% endfor %}
             </tbody>
           </table>
         </div>
       </div>
-      {% elif query %}
-        <div class="alert alert-warning text-center" style="max-width: 600px; margin: 0 auto;">
-            No patients found.
-        </div>
-      {% endif %}
+    {% elif query %}
+      <div class="alert alert-warning text-center" style="max-width: 600px; margin: 0 auto;">
+          No patients found.
+      </div>
+    {% endif %}
   {% endif %}
+
 
   {% if search_type == 'doctor' %}
     {% if doctors %}
@@ -87,13 +121,13 @@
               </tr>
             </thead>
             <tbody>
-              {% for doctor, speciality in doctors %}
+              {% for doctor in doctors %}
               <tr>
                 <td>{{ doctor.doc_id }}</td>
                 <td>{{ doctor.doc_name }}</td>
                 <td>{{ doctor.doc_email }}</td>
                 <td>{{ doctor.doc_tel }}</td>
-                <td>{{ speciality.s_name }}</td>
+                <td>{{ doctor.speciality.s_name if doctor.speciality else 'N/A' }}</td>
               </tr>
               {% endfor %}
             </tbody>
@@ -101,10 +135,11 @@
         </div>
       </div>
     {% elif query %}
-        <div class="alert alert-info text-center" style="max-width: 600px; margin: 0 auto;">
-            No doctors found.
-        </div>
+      <div class="alert alert-info text-center" style="max-width: 600px; margin: 0 auto;">
+          No doctors found.
+      </div>
     {% endif %}
   {% endif %}
+
 </div>
 {% endblock %}

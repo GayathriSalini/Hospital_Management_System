@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block body_class %}landing-page{% endblock %}
+{% block body %}landing-page{% endblock %}
 
 {% block title %} Register | NHS Hospital {% endblock %}
 
@@ -10,12 +10,12 @@
     <div>
       <a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong> &nbsp; Health Management System</a>
     </div>
-    <div><a href="{{ url_for('admin.dashboard') }}">ADD PATIENT | ← Back to Dashboard </a></div>
+    <div><a href="{{ url_for('admin.dashboard') }}"><strong>ADD PATIENT |</strong> ← Back to Dashboard </a></div>
   </div>
 </div>
 {% endblock %}
 
-{% block content %}
+{% block body__content %}
 <div class="main_container register_form d-flex justify-content-center align-items-center" style="min-height: 80vh;">
   
   <form action="{{ url_for('admin.add_patient') }}" method="POST" class="p-4 bg-light rounded shadow" style="max-width: 600px; width: 100%;">
@@ -44,7 +44,7 @@
         <label for="p_email" class="form-label fw-semibold">Email:</label>
         <input type="email" class="form-control" id="p_email" name="p_email" required maxlength="225" placeholder="Enter your email">
       </div>
-    </div>
+    </div>s
 
     <div class="mb-3">
       <label for="p_password" class="form-label fw-semibold">Password:</label>
@@ -63,7 +63,7 @@
       </div>
       <div class="col-md-6">
         <label for="p_tel" class="form-label fw-semibold">Phone Number (optional):</label>
-        <input type="tel" class="form-control" id="p_tel" name="p_tel" maxlength="15" placeholder="Enter your phone number">
+        <input type="tel" class="form-control" id="p_tel" name="p_tel" maxlength="10" placeholder="Enter your phone number">
       </div>
     </div>
 

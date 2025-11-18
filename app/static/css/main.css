@@ -37,7 +37,7 @@ a {
     z-index: 1;
 }
 
-.landing_h2 , .landing_p , .landing_btn, .landing_footer {
+.loginpage_h1 , .loginpage_h4 , .landing_btn, .landing_footer {
    color: white;
 }
 
@@ -68,6 +68,11 @@ a {
     z-index: 100;
 }
 
+.hosp_name a {
+    font-size: 1.4rem;
+    font-weight: 400;
+}
+
 .main-container {
     flex: 1;              
     display: flex;
@@ -76,7 +81,6 @@ a {
     align-items: center;
     text-align: center;
     padding: 0 20px;;
-    
 }
 
 
@@ -132,6 +136,7 @@ a {
   background-color: #0586d6;
 }
 
+
 .btn-view:hover,
 .btn-add:hover,
 .btn-complete:hover,
@@ -139,8 +144,6 @@ a {
   background-color: #54ABCF;
   transform: translateY(-2px);
 }
-
-
 
 
 
@@ -292,6 +295,8 @@ a {
     margin: 0; 
 }
 
+
+
 .card p { 
     font-size: 1.09em; 
     color: #333; 
@@ -327,7 +332,7 @@ a {
     margin-bottom: 22px;
 }
 
-.panel h3 {
+.panel h3  {
     margin-top: 0; 
     color: #00537A; 
     font-size: 1.1em; 
@@ -410,77 +415,5 @@ a{
 }
 
 
-/* 
-.main_container {
-    display: flex;
-    height: 96vh;
-}
-.sidebar {
-    width: 220px;
-    background-color: #254e97;
-    color: white;
-    padding-top: 20px;
-}
-.sidebar .logo {
-    padding-left: 16px;
-    margin-bottom: 30px;
-}
-.sidebar .menu {
-    list-style: none;
-    padding-left: 0;
-}
-.sidebar .menu li {
-    margin-bottom: 15px;
-}
-.sidebar .menu a {
-    color: white;
-    text-decoration: none;
-    padding-left: 25px;
-    display: block;
-    font-weight: 500;
-}
-.sidebar .menu a:hover {
-    background-color: #1b3a75;
-}
-.main {
-    flex: 1;
-    padding: 20px 40px;
-    overflow-y: auto;
-}
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-}
-.admin-info span {
-    font-weight: 500;
-    font-size: 1rem;
-}
-.appointments-section {
-    margin-top: 30px;
-    max-width: 100%;
-}
-.table {
-    width: 100%;
-    border-collapse: collapse;
-}
-.table th,
-.table td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    text-align: left;
-}
-.btn-cancel {
-    background-color: #e74c3c;
-    border: none;
-    padding: 6px 14px;
-    color: white;
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: 0.95rem;
-}
-.btn-cancel:hover {
-    background-color: #c0392b;
-}
- */
+/*CHART*/
+

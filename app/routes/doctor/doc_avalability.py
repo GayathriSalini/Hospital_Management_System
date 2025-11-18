@@ -4,6 +4,8 @@ from . import doctor_bp
 from models import DocSchedule, db, Doctor
 from flask_login import login_required, current_user
 
+
+
 @doctor_bp.route('/availability', methods=['GET', 'POST'])
 @login_required
 def availability():
@@ -37,14 +39,14 @@ def availability():
             return redirect(url_for('doctor.availability'))
 
         if mark_leave == '1':
- 
- 
+
             schedule = DocSchedule.query.filter_by(doc_id=doctor_id, schedule_date=schedule_date).first()
             if schedule:
                 schedule.title = "On Leave"
                 schedule.nop = 0
                 schedule.schedule_time = time(0, 0) 
             else:
+                
                 new_leave = DocSchedule(
                     doc_id=doctor_id,
                     title="On Leave",
@@ -54,6 +56,7 @@ def availability():
                 )
                 db.session.add(new_leave)
             db.session.commit()
+            
             flash("Marked as leave for the day.", "success")
             return redirect(url_for('doctor.availability'))
 
@@ -64,9 +67,16 @@ def availability():
         nop = request.form.get('nop')
 
         schedule_time = None
+        shift_end_time = None
         if time_str:
             try:
                 schedule_time = datetime.strptime(time_str, '%H:%M').time()
+               
+                dt = datetime.combine(schedule_date, schedule_time)
+                dt_end = dt + timedelta(hours=8)
+                shift_end_time = dt_end.time()
+            
+            
             except Exception:
                 flash("Invalid time format", "error")
                 return redirect(url_for('doctor.availability'))
@@ -101,6 +111,7 @@ def availability():
             db.session.add(new_schedule)
             db.session.commit()
             flash("Availability added successfully", "success")
+
 
         return redirect(url_for('doctor.availability'))
 

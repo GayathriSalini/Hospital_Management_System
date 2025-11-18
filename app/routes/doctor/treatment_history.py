@@ -23,12 +23,12 @@ def ptreatment_history(patient_id):
         Appointment.appo_date >= first_day,
         Appointment.appo_date <= last_day,
         Appointment.status == 'Completed'
-    ).order_by(Appointment.appo_date.asc()).all()
+    ).order_by(Appointment.appo_date.desc()).all()
 
 
     treatments_with_day = []
     for t in treatments:
-        dt_str = t.appointment.appo_date.strftime('%Y-%m-%d')  # Appointment date
+        dt_str = t.appointment.appo_date.strftime('%Y-%m-%d') 
         day_name = t.appointment.appo_date.strftime('%A')
         treatments_with_day.append((t, dt_str, day_name))
 
