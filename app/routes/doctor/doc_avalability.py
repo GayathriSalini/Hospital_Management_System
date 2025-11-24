@@ -57,7 +57,6 @@ def availability():
                 db.session.add(new_leave)
             db.session.commit()
             
-            flash("Marked as leave for the day.", "success")
             return redirect(url_for('doctor.availability'))
 
 
@@ -78,15 +77,14 @@ def availability():
             
             
             except Exception:
-                flash("Invalid time format", "error")
                 return redirect(url_for('doctor.availability'))
 
         try:
-            nop_val = int(nop) if nop else None
+            nop_val = int(nop) if nop else 20
             if nop_val is not None and nop_val < 0:
                 raise ValueError()
         except ValueError:
-            flash("Number of slots (nop) must be a non-negative integer", "error")
+            flash("Number of slots give again", "danger")
             return redirect(url_for('doctor.availability'))
 
         if schedule_id:
@@ -110,7 +108,7 @@ def availability():
             )
             db.session.add(new_schedule)
             db.session.commit()
-            flash("Availability added successfully", "success")
+            flash("Availability added", "success")
 
 
         return redirect(url_for('doctor.availability'))

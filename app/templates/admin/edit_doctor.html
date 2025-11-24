@@ -32,23 +32,23 @@
 {% endwith %}
 
       <div class="mb-2">
-        <label for="doc_name" class="form-label">Full Name:</label>
+        <label for="doc_name" class="form-label fw-semibold">Full Name:</label>
         <input type="text" class="form-control" value="{{ doctor.doc_name }}" id="doc_name" name="doc_name" required>
       </div>
       <div class="mb-2">
-        <label for="doc_email" class="form-label">Email:</label>
+        <label for="doc_email" class="form-label fw-semibold">Email:</label>
         <input type="email" class="form-control" value="{{ doctor.doc_email }}" id="doc_email" name="doc_email" required>
       </div>
       <div class="mb-2">
-        <label for="doc_nic" class="form-label">NIC:</label>
+        <label for="doc_nic" class="form-label fw-semibold">NIC:</label>
         <input type="text" class="form-control" id="doc_nic" value="{{ doctor.doc_nic }}" name="doc_nic">
       </div>
       <div class="mb-2">
-        <label for="doc_tel" class="form-label">Phone Number:</label>
+        <label for="doc_tel" class="form-label fw-semibold">Phone Number:</label>
         <input type="text" class="form-control" value="{{ doctor.doc_tel }}" id="doc_tel" name="doc_tel">
       </div>
       <div class="mb-3">
-        <label for="specialty_id" class="form-label">Specialty</label>
+        <label for="specialty_id" class="form-label fw-semibold">Specialty</label>
        <select class="form-select" id="specialty_id" name="specialty_id" required>
          <option value="" disabled selected>Select specialty</option>
         {% for spec in specialties %}
@@ -57,7 +57,7 @@
       </select>
       </div>
       <div class="mb-2">
-        <label for="doc_password" class="form-label">New Password (leave blank to keep current):</label>
+        <label for="doc_password" class="form-label fw-semibold">New Password (leave blank to keep current):</label>
         <input class="form-control" type="password" name="new_password">
       </div>
       <button type="submit" class="btn btn-primary w-100 mt-2">SAVE DOCTOR</button>

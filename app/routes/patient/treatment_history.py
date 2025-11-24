@@ -11,11 +11,9 @@ from sqlalchemy.orm import joinedload
 def treatment_history():
     patient_id = current_user.p_id
 
-
     today = date.today()
     first_day = today.replace(day=1)
     last_day = today.replace(day=monthrange(today.year, today.month)[1])
-
 
     treatments = Treatment.query.join(Treatment.appointment).options(
         joinedload(Treatment.appointment).joinedload(Appointment.doctor)

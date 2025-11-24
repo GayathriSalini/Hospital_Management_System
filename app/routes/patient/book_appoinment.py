@@ -91,7 +91,7 @@ def book_appointment():
 
         if matching_schedule:
             if matching_schedule.nop is not None and matching_schedule.nop <= 0:
-                flash('Slot is not available, select another slot.', 'danger')
+                flash('Slot not available, select another slot.', 'danger')
                 return redirect(url_for('patient.book_appointment'))
         else:
         
@@ -103,7 +103,7 @@ def book_appointment():
             ).count()
 
             if booked_count >= DEFAULT_CAPACITY:
-                flash('Slot is full, please choose another date.', 'danger')
+                flash('Slots full, please choose another date.', 'danger')
                 return redirect(url_for('patient.book_appointment'))
 
        
@@ -130,7 +130,7 @@ def book_appointment():
             doc_id=doctor_id,
             appo_date=appointment_date,
             appo_time=appointment_time
-        ).first()
+        ).first() 
 
         if existing:
             flash('You already have an appointment at this time.', 'danger')

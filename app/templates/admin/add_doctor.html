@@ -18,10 +18,11 @@
 {% block body__content %}
 <div 
   class="main_container register_form d-flex justify-content-center align-items-start"
-  style="min-height:40vh;"
+  style="min-height:40vh; overflow-y:auto;"
 >
-  <div class="container" style="max-width: 500px;">
-    <form method="POST" autocomplete="off" action="{{ url_for('admin.add_doctor') }}" class="p-4 bg-light rounded shadow">
+  <div class="container" style="max-width: 500px; overflow-y:auto;">
+    <form method="POST" novalidate autocomplete="off" action="{{ url_for('admin.add_doctor') }}" class="p-4 bg-light rounded shadow">
+      {{ form.csrf_token }}
       <h2 class="text-center mb-2">Add-Doctor Details</h2>
      
 {% with messages = get_flashed_messages(with_categories=true) %}
@@ -38,35 +39,37 @@
 {% endwith %}
 
       <div class="mb-2">
-        <label for="doc_name" class="form-label">Full Name:</label>
-        <input type="text" class="form-control" id="doc_name" name="doc_name" required>
+        {{ form.doc_name.label(class="form-label fw-semibold") }}
+    {{ form.doc_name(class="form-control") }}
+    {% for error in form.doc_name.errors %}<small class="text-danger">{{ error }}</small>{% endfor %}
       </div>
       <div class="mb-2">
-        <label for="doc_email" class="form-label">Email:</label>
-        <input type="email" class="form-control" id="doc_email" name="doc_email" required>
+        {{ form.doc_email.label(class="form-label fw-semibold") }}
+    {{ form.doc_email(class="form-control") }}
+    {% for error in form.doc_email.errors %}<small class="text-danger">{{ error }}</small>{% endfor %}
       </div>
       <div class="mb-2">
-        <label for="doc_password" class="form-label">Password:</label>
-        <input type="password" class="form-control" id="doc_password" name="doc_password" required>
+        {{ form.doc_password.label(class="form-label fw-semibold") }}
+    {{ form.doc_password(class="form-control") }}
+    {% for error in form.doc_password.errors %}<small class="text-danger">{{ error }}</small>{% endfor %}
       </div>
       <div class="mb-2">
-        <label for="doc_nic" class="form-label">NIC:</label>
-        <input type="text" class="form-control" id="doc_nic" name="doc_nic">
+        {{ form.doc_nic.label(class="form-label fw-semibold") }}
+    {{ form.doc_nic(class="form-control") }}
+    {% for error in form.doc_nic.errors %}<small class="text-danger">{{ error }}</small>{% endfor %}
       </div>
       <div class="mb-2">
-        <label for="doc_tel" class="form-label">Phone Number:</label>
-        <input type="text" maxlength="10" class="form-control" id="doc_tel" name="doc_tel">
+        {{ form.doc_tel.label(class="form-label fw-semibold") }}
+    {{ form.doc_tel(class="form-control") }}
+    {% for error in form.doc_tel.errors %}<small class="text-danger">{{ error }}</small>{% endfor %}
       </div>
-      <div class="mb-3">
-        <label for="specialty_id" class="form-label">Specialty</label>
-        <select class="form-select" id="specialty_id" name="specialty_id" required>
-        <option value="" disabled selected>Select specialty</option>
-        {% for spec in specialties %}
-          <option value="{{ spec.id }}">{{ spec.s_name }}({{ spec.id }})</option>
-        {% endfor %}
+      <div class="mb-3"> 
+        {{ form.specialty_id.label(class="form-label fw-semibold") }}
+    {{ form.specialty_id(class="form-select") }}
+    {% for error in form.specialty_id.errors %}<small class="text-danger">{{ error }}</small>{% endfor %}
       </select>
       </div>
-      <button type="submit" class="btn btn-primary w-100">Add Doctor</button>
+        {{ form.submit(class="btn btn-primary w-100") }}
     </form>
   </div>
 </div>

@@ -8,7 +8,7 @@
         <div class="logo"><h4><a href="{{ url_for('main.landing_page') }}"><strong>NHS |</strong>&nbsp;&nbsp; Health Management System</a></h4></div>
         <ul class="menu">
             <li><a href="{{ url_for('patient.dashboard') }}">Dashboard</a></li>
-            <li><a href="{{ url_for('patient.search_doctor') }}">Search Doctors</a></li>
+            <li><a href="{{ url_for('patient.search_doctor') }}">Search Doctors/Specialities</a></li>
             <li><a href="{{ url_for('patient.book_appointment') }}">Book Appointment</a></li>
             <li><a href="{{url_for('patient.appointments')}}">View Appointments</a></li>
             <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
@@ -27,7 +27,7 @@
         
             <div class="panel profile-card">
                 <div class="profile-card-header">
-                    <h5>Patient Information</h5>
+                    <h3>Patient Information</h3>
                     <a href="{{ url_for('patient.edit_data', patient_id=patient.p_id )}}" class="edit-btn">Edit</a>
                 </div>
                 <div class="profile-card-body">

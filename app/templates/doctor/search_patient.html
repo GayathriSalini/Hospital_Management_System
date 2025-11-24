@@ -27,7 +27,7 @@
 <form method="GET" action="{{ url_for('doctor.search_patient') }}" class="mb-4 w-100" style="max-width: 600px;">
   <div class="row g-2 align-items-center">
     <div class="col">
-      <input type="text" name="query" class="form-control" placeholder="Search patients by name/ID" value="{{ query }}" required style="height:3rem;">
+      <input type="text" name="query" class="form-control" placeholder="Search patients by name/ID/contact" value="{{ query }}" required style="height:3rem;">
     </div>
     <div class="col-auto">
       <button type="submit" class="btn btn-primary" style="height:3rem; ">Search Patient</button>
@@ -57,8 +57,9 @@
           <td>{{ patient.p_email }}</td>
           <td>{{ patient.p_tel }}</td>
           <td>
-            <a href="#" class="btn btn-sm btn-info">View Treatments</a>
+            <a href="{{ url_for('doctor.ptreatment_history', patient_id=patient.p_id) }}" class="btn btn-sm btn-info">View Treatments</a>
           </td>
+
         </tr>
       {% endfor %}
       </tbody>

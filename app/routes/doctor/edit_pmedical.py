@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
-from models import Patient, PatientDetails, db
+from models import Patient, PatientDetails, db, Appointment
 from . import doctor_bp
 from flask_login import login_required, current_user
 
@@ -22,7 +22,15 @@ def edit_patient_medical(patient_id):
         medical_details.chronic_conditions = request.form.get('chronic_conditions')
 
         db.session.commit()
-        return redirect(url_for('doctor.dashboard')) 
+        
+        doctor_id = current_user.doc_id
+        
+        appointment = Appointment.query.filter(Appointment.p_id == patient_id, 
+                                                Appointment.doc_id == doctor_id,
+                                            Appointment.status.in_(['Completed', "Booked"])).first()
+        
+        if appointment:
+          return redirect(url_for('doctor.add_treatment', appo_id = appointment.appo_id)) 
 
     if not medical_details:
      
@@ -34,4 +42,4 @@ def edit_patient_medical(patient_id):
             chronic_conditions = None
         medical_details = EmptyMedical()
 
-    return render_template('doctor/edit_patient_medical.html', medical_details=medical_details)
+    return render_template('doctor/edit_pmedical.html', medical_details=medical_details)

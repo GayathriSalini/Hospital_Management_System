@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash
 from . import admin_bp
 from datetime import datetime
 from flask_login import login_required, current_user
+from app.forms import AddPateintForm
 
 @admin_bp.route('/add_patient', methods=['GET','POST'])
 @login_required 
@@ -12,39 +13,28 @@ def add_patient():
         flash("Don't have permission","danger")
         return redirect(url_for('auth.login'))
     
-    if request.method == 'POST':
-        p_name = request.form['p_name']
-        p_email = request.form['p_email']
-        p_password = request.form['p_password']
-        p_address = request.form['p_address']
-        p_dob = request.form['p_dob']
-        p_tel = request.form['p_tel']
+    form = AddPateintForm()
+    
+    if form.validate_on_submit():
+      try: 
         
-        try:
-            p_dob = datetime.strptime(p_dob, '%Y-%m-%d').date()
-        except ValueError:
-            flash('Invalid date format for DOB ')
-            return redirect(url_for('admin.add_patient'))
-        
-        hashed_password = generate_password_hash(p_password)
+        hashed_password = generate_password_hash(form.p_password.data)
         
         new_patient = Patient (
-            p_name = p_name,
-            p_email = p_email,
+            p_name = form.p_name.data,
+            p_email = form.p_email.data,
             p_password = hashed_password,
-            p_address = p_address,
-            p_dob = p_dob,
-            p_tel = p_tel
+            p_address = form.p_address.data,
+            p_dob = form.p_dob.data,
+            p_tel = form.p_tel.data
         )
-        
-        try : 
-            db.session.add(new_patient)
-            db.session.commit()
-            return redirect(url_for('admin.dashboard'))
-        except Exception as e:
+         
+        db.session.add(new_patient)
+        db.session.commit()
+        return redirect(url_for('admin.dashboard'))
+      except Exception as e:
             db.session.rollback()
             flash("Error: Enter details Again","danger")
-            """ flash(f'Error: {str(e)}') """
             return redirect(url_for('admin.add_patient'))
            
-    return render_template('/admin/add_patient.html')
+    return render_template('/admin/add_patient.html',form=form)

@@ -22,7 +22,7 @@ def reschedule_appointment(appo_id):
 
     appointment = Appointment.query.get_or_404(appo_id)
     if appointment.p_id != patient_id:
-        flash('Unauthorized access.', 'error')
+        flash('Access denied.','danger')
         return redirect(url_for('patient.dashboard'))
 
     selected_date = request.args.get('selected_date', appointment.appo_date.strftime('%Y-%m-%d'))
@@ -30,14 +30,13 @@ def reschedule_appointment(appo_id):
     available_slots = []
 
     try:
-        selected_date_obj = datetime.strptime(selected_date, '%Y-%m-%d').date()
+        selected_date = datetime.strptime(selected_date, '%Y-%m-%d').date()
     except Exception:
-        flash('Invalid date format.', 'error')
-        selected_date_obj = appointment.appo_date
+        selected_date = appointment.appo_date
 
     leave_schedule = DocSchedule.query.filter_by(
         doc_id=appointment.doc_id,
-        schedule_date=selected_date_obj,
+        schedule_date=selected_date,
         title='On Leave'
     ).first()
 
@@ -47,7 +46,7 @@ def reschedule_appointment(appo_id):
     else:
         all_schedules = DocSchedule.query.filter_by(
             doc_id=appointment.doc_id,
-            schedule_date=selected_date_obj
+            schedule_date=selected_date
         ).all()
 
         if all_schedules:
@@ -60,19 +59,19 @@ def reschedule_appointment(appo_id):
             available_slots = [appointment.appo_time.strftime('%H:%M')]
 
     if request.method == 'POST':
-        date_str = request.form.get('appo_date')
-        time_str = request.form.get('appo_time')
+        date_selected = request.form.get('appo_date')
+        time_selected = request.form.get('appo_time')
 
-        if not date_str or not time_str:
-            flash('Please select both date and time.', 'error')
+        if not date_selected or not time_selected:
+           
             return render_template('patient/reschedule_appointment.html',
                                    appointment=appointment,
                                    selected_date=selected_date,
                                    available_slots=available_slots)
 
         try:
-            new_date = datetime.strptime(date_str, '%Y-%m-%d').date()
-            new_time = datetime.strptime(time_str, '%H:%M').time()
+            new_date = datetime.strptime(date_selected, '%Y-%m-%d').date()
+            new_time = datetime.strptime(time_selected, '%H:%M').time()
         except Exception as e:
             flash(f'Invalid date/time format: {str(e)}', 'danger')
             return render_template('patient/reschedule_appointment.html',
@@ -88,7 +87,7 @@ def reschedule_appointment(appo_id):
             title='On Leave'
         ).first()
         if leave_check:
-            flash('Doctor is on leave on this date.', 'danger')
+            flash('Doctor is on leave this date.', 'danger')
             return render_template('patient/reschedule_appointment.html',
                                    appointment=appointment,
                                    selected_date=selected_date,
@@ -118,7 +117,7 @@ def reschedule_appointment(appo_id):
                                        available_slots=available_slots)
 
             if schedule.nop is not None and schedule.nop <= 0:
-                flash('Selected slot is not available. Please choose another slot.', 'danger')
+                flash('Selected slot is not available. choose another slot.', 'danger')
                 return render_template('patient/reschedule_appointment.html',
                                        appointment=appointment,
                                        selected_date=selected_date,
@@ -127,12 +126,26 @@ def reschedule_appointment(appo_id):
             
           
             if not (DEFAULT_SHIFT_START <= new_time < DEFAULT_SHIFT_END):
-                flash('Selected time is outside the doctor working hours (09:00 to 17:00).', 'danger')
+                flash('Select different slot this is out of doctors working hours.', 'danger')
                 return render_template('patient/reschedule_appointment.html',
                                        appointment=appointment,
                                        selected_date=selected_date,
                                        available_slots=available_slots)
 
+    
+        
+        appo_timegap = timedelta(minutes=3)
+        requested_time = datetime.combine(new_date, new_time)
+        doc_appointments = Appointment.query.filter_by(doc_id=doctor_id, 
+                                                       appo_date=new_date,
+                                                       status="Booked").all()
+        for appt in doc_appointments:
+            if appt.appo_id == appo_id:
+                continue
+            existing_time = datetime.combine(appt.appo_date,appt.appo_time)    
+            if abs((requested_time - existing_time).total_seconds()) < appo_timegap.total_seconds():
+                flash('Select another slot this is already booked.', 'danger')
+                return render_template('patient/reschedule_appointment.html', appointment=appointment,selected_date=selected_date,available_slots=available_slots)
     
         existing = Appointment.query.filter(
             Appointment.p_id == patient_id,
@@ -148,7 +161,7 @@ def reschedule_appointment(appo_id):
                                    selected_date=selected_date,
                                    available_slots=available_slots)
 
-
+       
         old_date = appointment.appo_date
         old_time = appointment.appo_time
 
@@ -183,7 +196,7 @@ def reschedule_appointment(appo_id):
             return redirect(url_for('patient.dashboard'))
         except Exception as e:
             db.session.rollback()
-            flash(f'Failed to reschedule appointment: {str(e)}', 'danger')
+            flash('Failed to reschedule the appointment', 'danger')
             return render_template('patient/reschedule_appointment.html',
                                    appointment=appointment,
                                    selected_date=selected_date,

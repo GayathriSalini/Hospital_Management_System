@@ -33,7 +33,7 @@
 {% endwith %}
 
       <div class="mb-3">
-            <label for="doctor_id" class="form-label">Select Doctor</label>
+            <label for="doctor_id" class="form-label fw-semibold">Select Doctor</label>
             <select name="doctor_id" id="doctor_id" class="form-control" required>
                 <option value="" disabled selected>Select a doctor</option>
                 {% for doctor in doctors %}
@@ -44,11 +44,11 @@
             </select>
         </div>
         <div class="mb-3">
-            <label for="appointment_date" class="form-label">Select Date</label>
+            <label for="appointment_date" class="form-label fw-semibold">Select Date</label>
             <input type="date" id="appointment_date" class="form-control" name="appointment_date" class="form-control" required min="{{ datetime.utcnow().date().isoformat() }}">
         </div>
         <div class="mb-4">
-            <label for="appointment_time" class="form-label">Select Time</label>
+            <label for="appointment_time" class="form-label fw-semibold">Select Time</label>
             <input type="time" id="appointment_time" class="form-control" name="appointment_time" class="form-control" required>
         </div>
         <button type="submit" class="btn btn-primary">Book Appointment</button>

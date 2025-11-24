@@ -9,12 +9,16 @@ def search_patient():
     query = request.args.get('query', '').strip()
     patients = []
 
-    if query:
-        patients = Patient.query.filter(
-            (Patient.p_name.ilike(f'%{query}%')) |
-            (Patient.p_id.ilike(f'%{query}%')) |
-            (Patient.p_tel.ilike(f'%{query}%'))
-        ).all()
+    if query.isdigit():
+      patients = Patient.query.filter(Patient.p_id == int(query)).all()
+    else:
+       patients = Patient.query.filter(
+        (Patient.p_name.ilike(f'%{query}%')) |
+        (Patient.p_tel.ilike(f'%{query}%'))
+      ).all()
+
+    
+
 
     return render_template('doctor/search_patient.html', patients=patients, query=query)
 

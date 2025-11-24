@@ -14,7 +14,7 @@
 
 
 {% block body__content %}
-<div class="main_container dashboard mt-4 mx-auto bg-white" style="max-width: 900px; border-radius: 2rem; padding: 20px;">
+<div class="main_container dashboard mt-4 mx-auto bg-white" style="max-width: 900px; border-radius: 2rem; padding: 20px; overflow-y:auto;">
     <h2 class="text-center mb-4">Dr. {{ doctor.doc_name }}'s Availability</h2>
     {% if schedules %}
     <div style="overflow-x: auto;">
@@ -27,11 +27,11 @@
                 </tr>
             </thead>
             <tbody>
-            {% for sched in schedules %}
+            {% for sdoc in schedules %}
                 <tr> 
-                    <td>{{ sched.schedule_date.strftime('%A, %b %d, %Y') }}</td>
-                    <td>{{ sched.schedule_time.strftime('%H:%M') if sched.schedule_time else 'Anytime' }}</td>
-                    <td>{{ sched.nop if sched.nop is not none else 'Unlimited' }}</td>
+                    <td>{{ sdoc.schedule_date.strftime('%A, %b %d, %Y') }}</td>
+                    <td>{{ sdoc.schedule_time.strftime('%H:%M') if sdoc.schedule_time else 'Anytime' }}</td>
+                    <td>{{ sdoc.nop if sdoc.nop is not none else 'Unlimited' }}</td>
                 </tr>
             {% endfor %}
             </tbody>

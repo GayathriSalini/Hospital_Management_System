@@ -35,9 +35,10 @@
     {% endwith %}
   </div>
 
-    
+    {% if treatments_with_day %}
     <div class="text-end"><h4 ><strong>Patient Name:</strong> {{ treatments_with_day[0][0].appointment.patient.p_name }}</h4></div>
-    
+  
+    {% endif %}
   
     <div class="card-body">
       {% for t, dt_str, day_name in treatments_with_day %}

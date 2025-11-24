@@ -7,7 +7,7 @@ from app.routes import register_routes
 from werkzeug.security import generate_password_hash
 from flask_migrate import Migrate
 from flask_login import LoginManager
-
+from flask_wtf.csrf import CSRFProtect
 
 
 def create_app():
@@ -47,6 +47,7 @@ def create_app():
 
     migrate = Migrate(app, db)
     register_routes(app)
+    csrf = CSRFProtect(app)
  
 
     @event.listens_for(Engine, "connect")

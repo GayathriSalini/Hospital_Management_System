@@ -20,15 +20,18 @@ def admin_search():
     speciality_selected = None
 
     specialties_list = Specialities.query.order_by(Specialities.s_name).all()
-
+ 
     if query:
         if search_type == 'patient':
           
-            patients = Patient.query.filter(
-                (Patient.p_name.ilike(f"%{query}%")) |
-                (Patient.p_id.ilike(f"%{query}%")) |
-                (Patient.p_tel.ilike(f"%{query}%"))
-            ).all()
+            if query.isdigit():
+                patients = Patient.query.filter(Patient.p_id == int(query).all())
+            else:
+                patients = Patient.query.filter(
+                    (Patient.p_name.ilike.filter(f'%{query}%')) |
+                    (Patient.p_tel.ilike.filter(f'%{query}%'))
+                ).all()
+                
 
         elif search_type == 'doctor':
     

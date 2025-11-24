@@ -20,6 +20,6 @@ def cancel_appointment(appo_id):
     
     appointment.status = 'Cancelled'
     db.session.commit()
-    flash('Appointment cancelled successfully', 'success')
+   
     
     return redirect(url_for('patient.dashboard'))

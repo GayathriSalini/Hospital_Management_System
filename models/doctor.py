@@ -13,7 +13,7 @@ class Doctor(db.Model, UserMixin):
     specialty_id = db.Column(db.Integer, db.ForeignKey('specialities.id', ondelete='CASCADE'), nullable=True)
 
  
-    appointments = db.relationship(
+    appointments = db.relationship(   
         'Appointment',
         back_populates='doctor',
         cascade='all, delete-orphan'

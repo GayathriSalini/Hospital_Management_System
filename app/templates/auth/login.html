@@ -40,7 +40,8 @@
 
     <div class="tab-content mt-2" id="loginTabContent">
       <div class="tab-pane fade {% if active_tab == 'patient' %}show active{% endif %}" id="patient" role="tabpanel" aria-labelledby="patient-tab" tabindex="0">
-        <form method="POST" action="{{ url_for('auth.login') }}" class="p-4 bg-light rounded shadow" style="width: 100%;">
+        <form method="POST" action="{{ url_for('auth.login', active_tab='patient') }}" novalidate class="p-4 bg-light rounded shadow" style="width: 100%;">
+           {{ patient_form.csrf_token }}
           {% if active_tab == 'patient' %}
             {% with messages = get_flashed_messages(with_categories=true) %}
               {% if messages %}
@@ -58,15 +59,20 @@
                 
 
           <div class="mb-3">
-            <label for="p_email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="p_email" name="p_email" required />
+            {{ patient_form.email.label(class="form-label fw-semibold") }}
+            {{ patient_form.email(class="form-control") }}
+            {% for error in patient_form.email.errors %}
+                <small class="text-danger">{{ error }}</small>
+            {% endfor %}
           </div>
           <div class="mb-3">
-            <label for="p_password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="p_password" name="p_password" required />
+            {{ patient_form.password.label(class="form-label fw-semibold") }}
+            {{ patient_form.password(class="form-control") }}
+            {% for error in patient_form.password.errors %}
+                <small class="text-danger">{{ error }}</small>
+            {% endfor %}
           </div>
-          <input type="hidden" name="role" value="patient" />
-          <button type="submit" class="btn btn-primary w-100">Login as Patient</button>
+          {{ patient_form.submit(class="btn btn-primary w-100") }}
           <div class="text-center pt-2" >
             <a style="color:blue;" href={{ url_for('auth.register') }}>First time? REGISTER HERE</a>
           </div>
@@ -74,7 +80,8 @@
       </div>
 
       <div class="tab-pane fade {% if active_tab == 'doctor' %}show active{% endif %}" id="doctor" role="tabpanel" aria-labelledby="doctor-tab" tabindex="0">
-        <form method="POST" action="{{ url_for('auth.login') }}" class="p-4 bg-light rounded shadow" style="width: 100%;">
+        <form method="POST" action="{{ url_for('auth.login', active_tab='doctor') }}" novalidate class="p-4 bg-light rounded shadow" style="width: 100%;">
+           {{ doctor_form.csrf_token }}
           {% if active_tab == 'doctor' %}
             {% with messages = get_flashed_messages(with_categories=true) %}
               {% if messages %}
@@ -90,20 +97,26 @@
             {% endwith %}
           {% endif %}
           <div class="mb-3">
-            <label for="d_email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="d_email" name="d_email" required />
+            {{ doctor_form.email.label(class="form-label fw-semibold") }}
+            {{ doctor_form.email(class="form-control") }}
+            {% for error in doctor_form.email.errors %}
+                <small class="text-danger">{{ error }}</small>
+            {% endfor %}
           </div>
           <div class="mb-3">
-            <label for="d_password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="d_password" name="d_password" required />
+            {{ doctor_form.password.label(class="form-label fw-semibold") }}
+            {{ doctor_form.password(class="form-control") }}
+            {% for error in doctor_form.password.errors %}
+                <small class="text-danger">{{ error }}</small>
+            {% endfor %}
           </div>
-          <input type="hidden" name="role" value="doctor" />
-          <button type="submit" class="btn btn-primary w-100">Login as Doctor</button>
+          {{ doctor_form.submit(class=" btn btn-primary w-100")}}
         </form>
       </div>
 
       <div class="tab-pane fade {% if active_tab == 'admin' %}show active{% endif %}" id="admin" role="tabpanel" aria-labelledby="admin-tab" tabindex="0">
-        <form method="POST" action="{{ url_for('auth.login') }}" class="p-4 bg-light rounded shadow" style="width: 100%;">
+        <form method="POST" novalidate action="{{ url_for('auth.login', active_tab='admin') }}" class="p-4 bg-light rounded shadow" style="width: 100%;">
+          {{ admin_form.csrf_token }}
           {% if active_tab == 'admin' %}
             {% with messages = get_flashed_messages(with_categories=true) %}
               {% if messages %}
@@ -119,15 +132,20 @@
             {% endwith %}
           {% endif %}
           <div class="mb-3">
-            <label for="a_email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="a_email" name="a_email" required />
+            {{ admin_form.email.label(class="form-label fw-semibold") }}
+            {{ admin_form.email(class="form-control") }}
+            {% for error in admin_form.email.errors %}
+                <small class="text-danger">{{ error }}</small>
+            {% endfor %}
           </div>
           <div class="mb-3">
-            <label for="a_password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="a_password" name="a_password" required />
+            {{ admin_form.password.label(class="form-label fw-semibold") }}
+            {{ admin_form.password(class="form-control") }}
+            {% for error in admin_form.password.errors %}
+                <small class="text-danger">{{ error }}</small>
+            {% endfor %}
           </div>
-          <input type="hidden" name="role" value="admin" />
-          <button type="submit" class="btn btn-primary w-100">Login as Admin</button>
+          {{ admin_form.submit(class="btn btn-primary w-100") }}
         </form>
       </div>
     </div>

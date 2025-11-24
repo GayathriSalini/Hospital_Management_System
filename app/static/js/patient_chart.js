@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const chartData = {
         labels: labels,
         datasets: [{
-            label: 'Treatments per Month',
+            label: 'No of Treatments Month',
             data: data,
             fill: false,
             borderColor: '#011c40',
