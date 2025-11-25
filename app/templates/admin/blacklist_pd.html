@@ -16,7 +16,7 @@
 
 
 {% block body__content %}
-<div class="main_container d-flex flex-column align-items-center my-5" style="min-height: 70vh;">
+<div class="main_container d-flex flex-column align-items-center my-5" style="min-height: 70vh; overflow-y: auto;">
   <form method="GET" action="{{ url_for('admin.blacklist_search') }}" class="mb-4 w-100" style="max-width: 600px;">
     <div class="row g-2 align-items-center">
       <div class="col-auto">
@@ -36,7 +36,7 @@
 
   {% if search_type == 'patient' %}
     {% if patients %}
-      <div class="card shadow mb-4 w-100" style="max-width: 700px;">
+      <div class="card shadow mb-4 w-100" style="max-width: 700px; overflow-y:auto;">
         <div class="card-body">
           <h3 class="card-title">Patient Search Results</h3>
           <table class="table table-striped mt-3 mb-0">

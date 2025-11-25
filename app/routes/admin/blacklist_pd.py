@@ -2,8 +2,10 @@ from flask import render_template, url_for, flash, request, redirect
 from . import admin_bp
 from models import db, Patient, Doctor
 from flask_login import login_required, current_user
+from app.extensions import csrf
 
 
+@csrf.exempt
 @admin_bp.route('/blacklist_search', methods=['GET'])
 def blacklist_search():
     if not hasattr(current_user, 'a_email') or current_user.a_email != "admin@nhshospital.com":
@@ -34,6 +36,9 @@ def blacklist_search():
     return render_template('admin/blacklist_pd.html', search_type=search_type, query=query, patients=patients, doctors=doctors)
 
 
+
+
+@csrf.exempt
 @admin_bp.route('/blacklist/<user_type>/<int:user_id>', methods=['POST'])
 def delete_pd(user_type, user_id):
     if user_type == 'patient':

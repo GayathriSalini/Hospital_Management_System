@@ -10,9 +10,10 @@
       <li><a href="#">Dashboard</a></li>
       <li><a href="{{ url_for('admin.add_doctor') }}">Add Doctor</a></li>
       <li><a href="{{ url_for('admin.add_patient') }}">Add Patient</a></li>
-      <li><a href="{{ url_for('admin.doctors_list') }}">Doctors</a></li>
-      <li><a href="{{ url_for('admin.patients_list') }}">Patients</a></li>
+      <li><a href="{{ url_for('admin.doctors_list') }}">Doctors-List/Edit</a></li>
+      <li><a href="{{ url_for('admin.patients_list') }}">Patients-List/Edit</a></li>
       <li><a href="{{ url_for('admin.list_appointments')}}">Appointments</a></li>
+      <li><a href="{{ url_for('admin.admin_search') }}">Search-Doctor/Patient</a></li>
       <li><a href="{{ url_for('admin.blacklist_search') }}">BlackList</a></li>
       <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
     </ul>

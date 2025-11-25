@@ -4,13 +4,13 @@ from werkzeug.security import generate_password_hash
 from . import admin_bp
 from flask_login import login_required, current_user
 from app.forms import AddDoctorForm
+    
 
 @admin_bp.route('/add_doctor', methods=['GET', 'POST'])
 @login_required
 def add_doctor():
     if getattr(current_user, 'a_email', None) != 'admin@nhshospital.com':
         return redirect(url_for('auth.login'))
-    
     
     specialties = Specialities.query.all()
     form = AddDoctorForm()

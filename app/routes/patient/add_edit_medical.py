@@ -2,7 +2,10 @@ from . import patient_bp
 from flask import request, redirect, session, render_template, url_for
 from models import PatientDetails, db
 from flask_login import login_required, current_user
+from app.extensions import csrf
 
+
+@csrf.exempt
 
 @patient_bp.route('/medical/edit', methods=['GET', 'POST'])
 @login_required 

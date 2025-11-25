@@ -2,8 +2,10 @@ from flask import redirect, url_for, flash, request
 from models import Appointment, db
 from . import admin_bp
 from flask_login import login_required, current_user
+from app.extensions import csrf
 
 
+@csrf.exempt
 @admin_bp.route('/cancel_appointment/<int:appo_id>', methods=['GET','POST'])
 @login_required
 def cancel_appointment(appo_id):

@@ -3,7 +3,10 @@ from models import Appointment, db, Patient
 from datetime import date
 from flask_login import login_required, current_user
 from . import doctor_bp
+from app.extensions import csrf
 
+
+@csrf.exempt
 
 @doctor_bp.route('/doctor/mark_status/<int:appo_id>/<string:status>', methods=['POST'])
 @login_required

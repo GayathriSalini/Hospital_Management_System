@@ -3,8 +3,10 @@ from . import admin_bp
 from models import Doctor, db , Specialities
 from werkzeug.security  import generate_password_hash, check_password_hash
 from flask_login import login_required, current_user
+from app.extensions import csrf
 
 
+@csrf.exempt
 @admin_bp.route('/doctors/edit/<int:doctor_id>', methods = ['GET', 'POST'])
 @login_required
 def edit_doctor(doctor_id):

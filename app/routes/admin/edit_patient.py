@@ -4,8 +4,10 @@ from datetime import datetime
 from models import Patient, db , Specialities
 from werkzeug.security  import generate_password_hash, check_password_hash
 from flask_login import login_required, current_user
+from app.extensions import csrf
 
 
+@csrf.exempt
 @admin_bp.route('/patients/edit/<int:patient_id>', methods=['GET', 'POST'])
 @login_required
 def edit_patient(patient_id):

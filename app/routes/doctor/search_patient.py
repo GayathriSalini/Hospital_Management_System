@@ -2,7 +2,10 @@ from flask import Blueprint, render_template, request, redirect, url_for, sessio
 from models import Patient, Appointment, Treatment
 from . import doctor_bp
 from flask_login import login_required, current_user
+from app.extensions import csrf
 
+
+@csrf.exempt
 @doctor_bp.route('/patient_search', methods=['GET'])
 @login_required
 def search_patient():

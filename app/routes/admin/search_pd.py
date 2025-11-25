@@ -2,8 +2,10 @@ from flask import render_template, request, redirect, url_for
 from . import admin_bp
 from models import Patient, Doctor, Specialities, db
 from flask_login import login_required, current_user
+from app.extensions import csrf
 
 
+@csrf.exempt
 @admin_bp.route('/admin_search', methods=['GET'])
 @login_required
 def admin_search():

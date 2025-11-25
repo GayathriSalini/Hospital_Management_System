@@ -16,7 +16,7 @@
 <div class="main_container register_form d-flex justify-content-center align-items-start" style="min-height:40vh;">
     <div class="container" style="max-width: 500px;">
     <form method="POST" autocomplete="off" action="{{ url_for('admin.edit_patient', patient_id=patient.p_id) }}" class="p-4 bg-light rounded shadow">
-      <h2 class="text-center mb-2">Edit-Pateint Details</h2>
+      <h2 class="text-center text-black mb-2">Edit-Patient Details</h2>
      
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
@@ -41,7 +41,7 @@
       </div>
       <div class="mb-2">
         <label for="p_tel" class="form-label fw-semibold">Phone Number:</label>
-        <input type="text" class="form-control" value="{{ patient.p_tel }}" id="p_tel" name="p_tel">
+        <input type="text" class="form-control" value="{{ patient.p_tel }}" id="p_tel" maxlength="10" name="p_tel">
       </div>
       <div class="mb-2">
         <label for="p_dob" class="form-label fw-semibold">DOB</label>

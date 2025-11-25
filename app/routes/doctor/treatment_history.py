@@ -5,7 +5,10 @@ from models import Treatment, Appointment, Doctor
 from . import doctor_bp
 from flask_login import login_required, current_user
 from sqlalchemy.orm import joinedload
+from app.extensions import csrf
 
+
+@csrf.exempt
 @doctor_bp.route('patient_treament_history/<int:patient_id>', methods=['GET'])
 @login_required
 def ptreatment_history(patient_id):

@@ -2,7 +2,10 @@ from flask import render_template, request, redirect, url_for, flash
 from models import Appointment, db, Patient, Treatment, PatientDetails
 from flask_login import login_required, current_user
 from . import doctor_bp
+from app.extensions import csrf
 
+
+@csrf.exempt
 @doctor_bp.route('/doctor/add_treatment/<int:appo_id>', methods=['GET', 'POST'])
 @login_required
 def add_treatment(appo_id):

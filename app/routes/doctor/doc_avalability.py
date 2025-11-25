@@ -3,9 +3,10 @@ from datetime import datetime, timedelta, time
 from . import doctor_bp
 from models import DocSchedule, db, Doctor
 from flask_login import login_required, current_user
+from app.extensions import csrf
 
 
-
+@csrf.exempt
 @doctor_bp.route('/availability', methods=['GET', 'POST'])
 @login_required
 def availability():

@@ -2,8 +2,10 @@ from flask import Blueprint, render_template, request, redirect, url_for, sessio
 from models import Patient, PatientDetails, db, Appointment
 from . import doctor_bp
 from flask_login import login_required, current_user
+from app.extensions import csrf
 
 
+@csrf.exempt
 @doctor_bp.route('/patient/<int:patient_id>/edit_medical', methods=['GET', 'POST'])
 @login_required
 def edit_patient_medical(patient_id):

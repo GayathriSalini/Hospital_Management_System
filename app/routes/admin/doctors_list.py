@@ -2,7 +2,10 @@ from flask import render_template, redirect, url_for
 from . import admin_bp
 from models import Doctor , Specialities 
 from flask_login import login_required, current_user
+from app.extensions import csrf
 
+
+@csrf.exempt
 @admin_bp.route('/doctors', methods=['GET', 'POST'])
 @login_required
 def doctors_list():

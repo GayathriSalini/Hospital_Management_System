@@ -16,7 +16,7 @@
 <div class="main_container register_form d-flex justify-content-center align-items-start" style="min-height:40vh;">
     <div class="container" style="max-width: 500px;">
     <form method="POST" autocomplete="off" action="{{ url_for('admin.edit_doctor', doctor_id=doctor.doc_id) }}" class="p-4 bg-light rounded shadow">
-      <h2 class="text-center mb-2">Edit-Doctor Details</h2>
+      <h2 class="text-center text-black mb-2">Edit-Doctor Details</h2>
      
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}

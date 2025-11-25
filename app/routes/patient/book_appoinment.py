@@ -3,6 +3,8 @@ from models import Patient, Doctor, Appointment, DocSchedule, db
 from datetime import datetime, time, timedelta
 from . import patient_bp
 from flask_login import login_required, current_user
+from app.extensions import csrf
+
 
 
 def get_shift_end_time(schedule_date, schedule_time):
@@ -12,7 +14,7 @@ def get_shift_end_time(schedule_date, schedule_time):
     end_dt = start_dt + timedelta(hours=8)
     return end_dt.time()
 
-
+@csrf.exempt
 @patient_bp.route('/book_appointment', methods=['GET', 'POST'])
 @login_required
 def book_appointment():
@@ -107,7 +109,7 @@ def book_appointment():
                 return redirect(url_for('patient.book_appointment'))
 
        
-        time_appointment = timedelta(minutes=3)
+        time_appointment = timedelta(minutes=10)
         request_time = datetime.combine(appointment_date,appointment_time)
         
         doc_appointments= Appointment.query.filter_by(

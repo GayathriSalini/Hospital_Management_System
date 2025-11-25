@@ -3,8 +3,10 @@ from . import admin_bp
 from datetime import datetime
 from models import Appointment, Patient, Doctor , Specialities
 from flask_login import login_required, current_user
+from app.extensions import csrf
 
 
+@csrf.exempt
 @admin_bp.route('/appointments', methods = ['GET'])
 @login_required
 def list_appointments():
