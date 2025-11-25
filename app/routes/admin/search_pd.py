@@ -27,11 +27,11 @@ def admin_search():
         if search_type == 'patient':
           
             if query.isdigit():
-                patients = Patient.query.filter(Patient.p_id == int(query).all())
+                patients = Patient.query.filter(Patient.p_id == int(query)).all()
             else:
                 patients = Patient.query.filter(
-                    (Patient.p_name.ilike.filter(f'%{query}%')) |
-                    (Patient.p_tel.ilike.filter(f'%{query}%'))
+                    (Patient.p_name.ilike(f'%{query}%')) |
+                    (Patient.p_tel.ilike(f'%{query}%'))
                 ).all()
                 
 
@@ -40,7 +40,7 @@ def admin_search():
             if doctor_search_by == 'name':
                 doctors = Doctor.query.filter(Doctor.doc_name.ilike(f"%{query}%")).all()
             elif doctor_search_by == 'id':
-                doctors = Doctor.query.filter(Doctor.doc_id.ilike(f"%{query}%")).all()
+                doctors = Doctor.query.filter(Doctor.doc_id == int(query)).all()
             elif doctor_search_by == 'specialty':
        
                 try:
