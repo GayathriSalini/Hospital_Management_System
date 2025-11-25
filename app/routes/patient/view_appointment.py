@@ -3,7 +3,9 @@ from . import patient_bp
 from datetime import datetime
 from models import Appointment, Patient
 from flask_login import login_required, current_user
+from app.extensions import csrf
 
+@csrf.exempt
 @patient_bp.route('/appointments', methods=['GET','POST'])
 @login_required
 def appointments():

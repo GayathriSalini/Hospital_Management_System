@@ -7,9 +7,9 @@ from app.routes import register_routes
 from werkzeug.security import generate_password_hash
 from flask_migrate import Migrate
 from flask_login import LoginManager
-from flask_wtf.csrf import CSRFProtect
+from app.extensions import csrf
 
-csrf = CSRFProtect()
+
 
 def create_app():
     app = Flask(__name__,template_folder='templates',static_folder='static')
