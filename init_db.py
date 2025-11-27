@@ -17,3 +17,4 @@ with app.app_context():
     
     """ create_default_admin()
     print("admin created") """
+    
