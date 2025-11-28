@@ -69,5 +69,8 @@ python app.py
 **✅ Open your browser: http://127.0.0.1:5000**
 
 ## 🔑 Default Admin Login
-**Email:** [admin@nhshospital.com](mailto:admin@nhshospital.com) **|** **Password:** admin@NHShospital
+
+**Email:** [admin@nhshospital.com](mailto:admin@nhshospital.com)  
+**Password:** admin@NHShospital
+
 
