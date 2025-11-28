@@ -73,7 +73,7 @@
   {% if search_type == 'patient' %}
     {% if patients %}
       <div class="card shadow mb-4 w-100" style="max-width: 700px; orverflow-y:auto;">
-        <div class="card-body">
+        <div class="card-body" style="max-height:400px; overflow-y:auto;">
           <h3 class="card-title">Patient Search Results</h3>
           <table class="table table-striped mt-3 mb-0">
             <thead>
@@ -108,7 +108,7 @@
   {% if search_type == 'doctor' %}
     {% if doctors %}
       <div class="card shadow mb-4 w-100" style="max-width: 900px;">
-        <div class="card-body">
+        <div class="card-body" style="max-height:400px; overflow-y:auto;">
           <h3 class="card-title">Doctor Search Results</h3>
           <table class="table table-hover mt-3 mb-0 table-bordered">
             <thead>

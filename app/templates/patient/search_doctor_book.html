@@ -18,7 +18,7 @@
 {% endblock %}
 
 {% block body__content %}
-<div class="main_container d-flex flex-column align-items-center my-5" style="min-height:70vh; max-width:900px; margin:auto;">
+<div class="main_container d-flex flex-column align-items-center my-5" style="min-height:70vh; max-width:900px; margin:auto; overflow-y:auto;">
   <form method="GET" action="{{ url_for('patient.search_doctor') }}" class="mb-4 w-100 d-flex gap-2 align-items-center">
     <select name="search_by" class="form-select" style="width:150px; height:3rem;" onchange="this.form.submit()" >
       <option value="name"  {% if search_by == 'name' %}selected{% endif %} >Name</option>
@@ -43,8 +43,8 @@
   
   {% if query %}
     {% if doctors %}
-      <div class="card shadow mb-4 w-100" style="max-width: 900px;">
-        <div class="card-body">
+      <div class="card shadow mb-4 w-100" style="max-width: 900px; ">
+        <div class="card-body" style="max-height:400px; overflow-y:auto;">
         <table class="table table-hover table-bordered">
           <thead>
             <tr>

@@ -31,10 +31,11 @@ def blacklist_search():
     elif search_type == 'doctor' and query:
         if query.isdigit():
            doctors = Doctor.query.filter(Doctor.doc_id == int(query)).all()
+           doctors = Doctor.query.filter(Doctor.doc_nic == int(query)).all()
         else:
           doctors = Doctor.query.filter(
            (Doctor.doc_name.ilike(f'%{query}%')) |
-           (Doctor.doc_tel.ilike(f'%{query}%'))
+           (Doctor.doc_email.ilike(f'%{query}%'))
          ).all()
 
     return render_template('admin/blacklist_pd.html', search_type=search_type, query=query, patients=patients, doctors=doctors)
