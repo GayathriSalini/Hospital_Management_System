@@ -18,6 +18,7 @@ NHS Health Management System built with Flask and SQLite provides role-based das
 ### **Option 1: Quick Start (No Virtual Environment)**
 Step 1: Clone/Download the project folder
 git clone https://github.com/24f3000207/hospital-management-system.git
+
 cd hospital-management-system
 
 Step 2: Install required packages globally
