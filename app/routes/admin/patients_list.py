@@ -13,3 +13,4 @@ def patients_list():
         return redirect(url_for('auth.login'))
     patients = Patient.query.all()
     return render_template('admin/patients_list.html', patients=patients)
+ 

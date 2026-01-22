@@ -11,7 +11,7 @@ def dashboard():
         total_patients = Patient.query.count()
         total_appointments = Appointment.query.count()
         
-        return render_template(
+        return render_template( 
             'admin/dashboard.html',
             total_doctors=total_doctors,
             total_patients=total_patients,
